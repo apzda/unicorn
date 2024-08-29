@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.apzda.cloud</groupId>
+        <artifactId>apzda-cloud-gsvc-parent</artifactId>
+        <version>1.2.20-SNAPSHOT</version>
+        <relativePath/>
+    </parent>
+
+    <artifactId>apzda</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>apzda-gateway</module>
+        <module>apzda-mono</module>
+        <module>apzda-common</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <apzda.bom.version>1.0.5-SNAPSHOT</apzda.bom.version>
+    </properties>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- apzda official modules -->
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>apzda-bom</artifactId>
+                <version>${apzda.bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- application modules -->
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>apzda-common</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <!-- third party library -->
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.github.ulisesbocchio</groupId>
+                    <artifactId>jasypt-maven-plugin</artifactId>
+                    <version>${jasypt.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>io.spring.javaformat</groupId>
+                <artifactId>spring-javaformat-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>ossrh</id>
+            <name>OSS Repository Host</name>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>interval:5</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+</project>
