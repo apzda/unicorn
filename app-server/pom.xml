@@ -58,6 +58,10 @@
             <groupId>com.apzda.cloud</groupId>
             <artifactId>oss-backend-fs</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.apzda.cloud</groupId>
+            <artifactId>uc-service</artifactId>
+        </dependency>
         <!-- app library -->
         <dependency>
             <groupId>com.apzda.cloud</groupId>

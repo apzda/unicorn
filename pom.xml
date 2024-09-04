@@ -18,6 +18,7 @@
         <module>app-server</module>
         <module>app-common</module>
         <module>app-i18n</module>
+        <module>services</module>
     </modules>
 
     <properties>

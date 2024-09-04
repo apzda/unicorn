@@ -21,6 +21,7 @@ import com.apzda.cloud.captcha.server.EnableCaptchaServer;
 import com.apzda.cloud.common.config.CommonConfig;
 import com.apzda.cloud.config.server.EnableConfigServer;
 import com.apzda.cloud.oss.server.EnableOssServer;
+import com.apzda.cloud.uc.server.EnableUCenterServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
@@ -36,6 +37,7 @@ import org.springframework.context.annotation.Import;
 @EnableCaptchaServer
 @EnableAuditServer
 @EnableOssServer
+@EnableUCenterServer
 public class AppServer {
 
     public static void main(String[] args) {
