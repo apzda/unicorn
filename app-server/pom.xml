@@ -9,7 +9,7 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>apzda-mono</artifactId>
+    <artifactId>app-server</artifactId>
 
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
@@ -61,9 +61,8 @@
         <!-- app library -->
         <dependency>
             <groupId>com.apzda.cloud</groupId>
-            <artifactId>apzda-common</artifactId>
+            <artifactId>app-common</artifactId>
         </dependency>
-
         <!-- third library -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -114,7 +113,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.apzda.cloud.mono.MonoServer</mainClass>
+                    <mainClass>com.apzda.cloud.mono.AppServer</mainClass>
                 </configuration>
             </plugin>
         </plugins>

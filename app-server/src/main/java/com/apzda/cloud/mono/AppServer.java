@@ -36,10 +36,10 @@ import org.springframework.context.annotation.Import;
 @EnableCaptchaServer
 @EnableAuditServer
 @EnableOssServer
-public class MonoServer {
+public class AppServer {
 
     public static void main(String[] args) {
-        SpringApplication.run(MonoServer.class, args);
+        SpringApplication.run(AppServer.class, args);
     }
 
 }

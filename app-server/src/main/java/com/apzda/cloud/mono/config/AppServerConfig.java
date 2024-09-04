@@ -24,6 +24,6 @@ import org.springframework.context.annotation.Configuration;
  * @since 1.0.0
  **/
 @Configuration(proxyBeanMethods = false)
-public class MonoServerConfig {
+public class AppServerConfig {
 
 }

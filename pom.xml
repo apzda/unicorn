@@ -6,8 +6,7 @@
     <parent>
         <groupId>com.apzda.cloud</groupId>
         <artifactId>apzda-cloud-gsvc-parent</artifactId>
-        <version>1.2.20-SNAPSHOT</version>
-        <relativePath/>
+        <version>1.2.20</version>
     </parent>
 
     <artifactId>apzda</artifactId>
@@ -15,17 +14,18 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>apzda-gateway</module>
-        <module>apzda-mono</module>
-        <module>apzda-common</module>
+        <module>api-gateway</module>
+        <module>app-server</module>
+        <module>app-common</module>
+        <module>app-i18n</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <apzda.bom.version>1.0.5-SNAPSHOT</apzda.bom.version>
+        <apzda.bom.version>1.0.5</apzda.bom.version>
+        <apzda.uc.version>1.0.0-SNAPSHOT</apzda.uc.version>
     </properties>
-
 
     <dependencyManagement>
         <dependencies>
@@ -37,10 +37,22 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>uc</artifactId>
+                <version>${apzda.uc.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <!-- application modules -->
             <dependency>
                 <groupId>com.apzda.cloud</groupId>
-                <artifactId>apzda-common</artifactId>
+                <artifactId>app-common</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>app-i18n</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
             </dependency>
             <!-- third party library -->
