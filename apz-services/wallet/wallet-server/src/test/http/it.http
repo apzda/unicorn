@@ -1,0 +1,8 @@
+## Wallet List
+POST localhost:30903/wallet/
+Content-Type: application/json
+
+{
+    "uid": 1,
+    "currency": "CNY"
+}

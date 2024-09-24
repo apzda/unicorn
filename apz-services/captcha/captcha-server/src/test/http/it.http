@@ -1,0 +1,79 @@
+### Get Captcha
+GET http://localhost:38082/captcha/create?uuid=123456&width=105&height=35
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.errCode === 0, "")
+        client.assert(response.body.data.type === "image", "")
+        client.assert(response.body.data.captcha.startsWith("data:image/png;base64,"), "")
+        client.global.set("CAPTCHA_ID", response.body.data.id)
+    });
+%}
+
+### Get Captcha
+GET http://localhost:38082/captcha/create?width=105&height=35
+UUID: 123456
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.errCode === 0, "")
+        client.assert(response.body.data.type === "image", "")
+        client.assert(response.body.data.captcha.startsWith("data:image/png;base64,"), "")
+        client.global.set("CAPTCHA_ID", response.body.data.id)
+    });
+%}
+
+### Validate
+POST http://localhost:38082/captcha/validate
+Content-Type: application/json
+UUID: 123456
+
+{
+    "id": "{{ CAPTCHA_ID }}",
+    "code": "a12B"
+}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.errCode === 0, "")
+    });
+%}
+
+### Validate - 2
+POST http://localhost:38082/captcha/validate
+Content-Type: application/json
+
+{
+    "id": "{{ CAPTCHA_ID }}",
+    "uuid": "123456",
+    "code": "a12B"
+}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.errCode === 0, "")
+    });
+%}
+
+
+### Validate - 3
+POST http://localhost:38082/captcha/validate
+Content-Type: application/json
+
+{
+    "id": "{{ CAPTCHA_ID }}",
+    "uuid": "123456",
+    "code": "a12c"
+}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.errCode === 1, "")
+        client.assert(response.body.data.reload === true, "")
+    });
+%}

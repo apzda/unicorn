@@ -1,0 +1,6 @@
+spring:
+  flyway:
+    locations: classpath:/db/migration/{vendor}
+    out-of-order: true
+    baseline-on-migrate: true
+    validate-on-migrate: false

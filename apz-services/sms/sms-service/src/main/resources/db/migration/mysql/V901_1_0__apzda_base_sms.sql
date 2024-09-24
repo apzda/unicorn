@@ -1,0 +1,25 @@
+CREATE TABLE `apzda_sms_log`
+(
+    id          BIGINT UNSIGNED                            NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    created_at  BIGINT UNSIGNED                            NULL     DEFAULT NULL,
+    created_by  VARCHAR(32)                                NULL COMMENT 'Create User Id',
+    updated_at  BIGINT UNSIGNED                            NULL     DEFAULT NULL,
+    updated_by  VARCHAR(32)                                NULL COMMENT 'Last updated by who',
+    deleted     BIT                                        NOT NULL DEFAULT FALSE COMMENT 'Soft Deleted Flag',
+    tenant_id   VARCHAR(32)                                NULL COMMENT 'the id of the tenant to which this setting belongs',
+    `tid`       VARCHAR(64)                                NOT NULL COMMENT 'Template ID',
+    `phone`     VARCHAR(11)                                NOT NULL COMMENT 'phone number',
+    `vendor`    VARCHAR(16)                                NOT NULL COMMENT 'Sms Vendor Id',
+    `status`    enum ('PENDING','SENDING','SENT','FAILED') NOT NULL DEFAULT 'PENDING' COMMENT 'Status of sending',
+    `sent_time` BIGINT UNSIGNED                            NULL COMMENT 'SENT TIME',
+    `retried`   INTEGER UNSIGNED                           NOT NULL DEFAULT 0 COMMENT 'retry counts',
+    `intervals` SMALLINT UNSIGNED                          NOT NULL COMMENT 'Sending intervals',
+    `content`   VARCHAR(256)                               NULL COMMENT 'Sms Text',
+    `params`    LONGTEXT                                   NULL COMMENT 'Variables used by sms template',
+    `error`     TEXT                                       NULL COMMENT 'Error message',
+    INDEX idx_tid (`tid`),
+    INDEX idx_phone (`phone`),
+    INDEX idx_vendor (`vendor`),
+    INDEX idx_sent_time (`sent_time` ASC),
+    INDEX idx_status (`status`)
+) ENGINE = InnoDB COMMENT 'Sms Logs';

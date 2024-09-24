@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.apzda.cloud</groupId>
         <artifactId>apzda-cloud-gsvc-parent</artifactId>
-        <version>1.2.20</version>
+        <version>1.2.22-SNAPSHOT</version>
     </parent>
 
     <artifactId>apzda</artifactId>
@@ -14,49 +14,186 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>api-gateway</module>
-        <module>app-server</module>
         <module>app-common</module>
-        <module>app-i18n</module>
-        <module>services</module>
+        <module>app-gateway</module>
+        <module>app-server</module>
+        <module>app-services</module>
+        <module>apz-services</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <apzda.bom.version>1.0.5</apzda.bom.version>
-        <apzda.uc.version>1.0.0-SNAPSHOT</apzda.uc.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <!-- apzda official modules -->
+            <!-- config service -->
             <dependency>
                 <groupId>com.apzda.cloud</groupId>
-                <artifactId>apzda-bom</artifactId>
-                <version>${apzda.bom.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <artifactId>config-core</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.apzda.cloud</groupId>
-                <artifactId>uc</artifactId>
-                <version>${apzda.uc.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <artifactId>config-client</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
             </dependency>
-            <!-- application modules -->
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>config-service</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <!-- sms service -->
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>sms-client</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>sms-dayu</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>sms-chuanglan</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>sms-service</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <!-- audit service -->
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>audit-client</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>audit-service</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <!-- captcha service -->
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>captcha-client</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>captcha-service</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <!-- messenger service -->
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>messenger-client</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>messenger-service</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <!-- oss service -->
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>oss-backend-fs</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>oss-backend-alioss</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>oss-backend-minio</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>oss-backend-txcos</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>oss-plugin-resize</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>oss-plugin-watermark</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>oss-client</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>oss-service</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <!-- uc service -->
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>uc-core</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>uc-ldap</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>uc-client</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>uc-sms</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>uc-wx-miniapp</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>uc-wx-mp</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>uc-service</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <!-- wallet service -->
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>wallet-client</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.apzda.cloud</groupId>
+                <artifactId>wallet-service</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <!-- application libraries -->
             <dependency>
                 <groupId>com.apzda.cloud</groupId>
                 <artifactId>app-common</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
             </dependency>
-            <dependency>
-                <groupId>com.apzda.cloud</groupId>
-                <artifactId>app-i18n</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
-            </dependency>
-            <!-- third party library -->
+            <!-- application services -->
+            <!-- third-party libraries -->
         </dependencies>
     </dependencyManagement>
 

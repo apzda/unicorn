@@ -1,0 +1,20 @@
+server.port: 38083
+
+spring:
+  application:
+    name: sms-service
+  data:
+    redis:
+      database: 0
+      host: localhost
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/apzda_infra_db?characterEncoding=UTF-8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: Abc12332!
+  jpa:
+    show-sql: true
+
+logging:
+  level:
+    com.apzda: debug

@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package apzda.sms;
+import "google/protobuf/empty.proto";
+import "gsvc/ext.proto";
+import "buf/validate/validate.proto";
+
+option java_package = "com.apzda.cloud.sms.proto";
+option java_multiple_files = true;
+option java_outer_classname = "SmsProto";
+
+message Variable {
+  string name = 1 [(buf.validate.field).required = true];
+  string value = 2 [(buf.validate.field).required = true];
+  uint32 index = 3;
+}
+
+message SendReq {
+  string tid = 1 [(buf.validate.field).required = true];
+  repeated string phone = 2 [(buf.validate.field).repeated.min_items = 1];
+  repeated Variable variable = 3;
+  optional bool sync = 4;
+}
+
+message SendRes {
+  int32 err_code = 1;
+  optional string err_msg = 2;
+  optional int32 interval = 3;
+}
+
+message VerifyReq {
+  string tid = 1 [(buf.validate.field).required = true];
+  string phone = 2 [(buf.validate.field).required = true];
+  repeated Variable variable = 3;
+}
+
+message Query {
+  optional string vendor = 1;
+  optional string tid = 2;
+  optional string phone = 3;
+  optional string status = 4;
+  optional uint64 start_time = 5;
+  optional uint64 end_time = 6;
+  optional gsvc.Pager pager = 7;
+  optional string tenant_id = 8;
+}
+
+message Log {
+  optional uint64 created_at = 1;
+  optional string created_by = 2;
+  optional uint64 updated_at = 3;
+  optional string updated_by = 4;
+  optional string tenant_id = 5;
+  string tid = 7;
+  string phone = 8;
+  string vendor = 9;
+  string  status = 10;
+  optional uint64  sent_time = 11;
+  uint32 retried = 12;
+  uint32 intervals = 13;
+  optional string content = 14;
+  optional string params = 15;
+  optional string error = 16;
+}
+
+message QueryRes {
+  int32 err_code = 1;
+  optional string err_msg = 2;
+  repeated Log logs = 3;
+  gsvc.PageInfo pager = 4;
+}
+
+message ConfigRes {
+  int32 err_code = 1;
+  optional string err_msg = 2;
+  repeated Variable vendors = 3;
+  repeated Variable templates = 4;
+  repeated Variable status = 5;
+}
+
+service SmsService {
+  rpc send(SendReq) returns(SendRes);
+  rpc verify(VerifyReq) returns (gsvc.CommonRes);
+  rpc logs(Query) returns(QueryRes);
+  rpc config(google.protobuf.Empty) returns (ConfigRes);
+}

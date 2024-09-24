@@ -1,0 +1,125 @@
+### send
+POST http://localhost:38083/~smsService/send
+Content-Type: application/json
+X-Gsvc-Caller: g-t-w
+
+{
+    "tid": "login",
+    "phone": [
+        "16049910022"
+    ],
+    "variable": [
+        {
+            "name": "code",
+            "value": "123456"
+        }
+    ]
+}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.errCode === 0, "")
+    });
+%}
+
+### verify - error
+POST http://localhost:38083/~smsService/verify
+Content-Type: application/json
+X-Gsvc-Caller: g-t-w
+
+{
+    "phone": "16049910022",
+    "tid": "login",
+    "variable": [
+        {
+            "name": "code",
+            "value": "123458"
+        }
+    ]
+}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.errCode === 3, response.body.errCode + " != 3")
+    });
+%}
+
+### verify
+POST http://localhost:38083/~smsService/verify
+Content-Type: application/json
+X-Gsvc-Caller: g-t-w
+
+{
+    "phone": "16049910022",
+    "tid": "login",
+    "variable": [
+        {
+            "name": "code",
+            "value": "123456"
+        }
+    ]
+}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.errCode === 0, response.body.errCode + " != 0")
+    });
+%}
+
+### verify - agin
+POST http://localhost:38083/~smsService/verify
+Content-Type: application/json
+X-Gsvc-Caller: g-t-w
+
+{
+    "phone": "16049910022",
+    "tid": "login",
+    "variable": [
+        {
+            "name": "code",
+            "value": "123456"
+        }
+    ]
+}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.errCode === 3, response.body.errCode + " != 3")
+    });
+%}
+
+### logs
+POST http://localhost:38083/~smsService/logs
+Content-Type: application/json
+X-Gsvc-Caller: g-t-w
+
+{
+    "phone": "16049910022"
+}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.errCode === 0, "")
+        client.assert(response.body.data.logs.length > 0, "")
+    });
+%}
+
+### config
+POST http://localhost:38083/~smsService/config
+Content-Type: application/json
+X-Gsvc-Caller: g-t-w
+
+{}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.errCode === 0, "")
+        client.assert(response.body.data.vendors.length > 0, "")
+    });
+%}

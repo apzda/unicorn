@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package apzda.uc;
+
+import "gsvc/ext.proto";
+import "buf/validate/validate.proto";
+
+import "privilege.proto";
+
+option java_package = "com.apzda.cloud.uc.proto";
+option java_multiple_files = true;
+option java_outer_classname = "RoleProto";
+
+option(gsvc.serviceName) = "UcenterService";
+
+// 角色
+message Role {
+  string id = 1;
+  string role = 2;
+  string name = 3;
+  string description = 4;
+  bool builtin = 5;
+  string tenant_id = 6;
+  repeated Role children = 7;
+  repeated Role parents = 8;
+  repeated apzda.uc.PrivilegeVo granted = 9;
+}
+
+message RoleDto {
+  string id = 1;
+  string role = 2 [(buf.validate.field).required = true];
+  string name = 3 [(buf.validate.field).required = true];
+  string description = 4;
+  repeated string children = 5;
+  repeated string granted = 6;
+}
+
+message RoleId {
+  string id = 1 [(buf.validate.field).required = true];
+}
+
+// 角色查询
+message RoleQuery {
+  optional int32 size = 1;
+  optional  int32 current = 2;
+  optional string role = 4;
+  optional string name = 5;
+}
+
+message RoleQueryResponse {
+  uint64 err_code = 1;
+  optional string err_msg = 2;
+  int32 current = 3;
+  int32 size = 4;
+  int32 total_page = 5;
+  uint64 total_record = 6;
+  repeated Role results = 7;
+}
+
+service RoleService {
+  // 角色查询
+  rpc list(RoleQuery) returns (RoleQueryResponse);
+  rpc create(RoleDto) returns (gsvc.CommonRes);
+  rpc update(RoleDto) returns (gsvc.CommonRes);
+  rpc delete(RoleId) returns (gsvc.CommonRes);
+}

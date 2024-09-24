@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package apzda.config;
+
+import "gsvc/ext.proto";
+import "buf/validate/validate.proto";
+
+option java_package = "com.apzda.cloud.config.proto";
+option java_multiple_files = true;
+option java_outer_classname = "ConfigProto";
+
+
+message KeyReq {
+  string key = 1 [(buf.validate.field).required = true];
+}
+
+message LoadRes {
+  int32  err_code = 1;
+  optional string  err_msg = 2;
+  bytes setting = 3;
+}
+
+message SaveReq{
+  string key = 1 [(buf.validate.field).required = true];
+  bytes setting = 2 [(buf.validate.field).required = true];
+}
+
+message CommonRes {
+  int32  err_code = 1;
+  optional string  err_msg = 2;
+}
+
+message RestoreReq {
+  string key = 1 [(buf.validate.field).required = true];
+  optional uint32 revision = 2;
+}
+
+message RevisionReq {
+  string key = 1 [(buf.validate.field).required = true];
+  optional uint32 revision = 2;
+  optional gsvc.Pager pager = 3;
+}
+
+message Revision {
+  uint32 revision = 1;
+  bytes setting = 2;
+  uint64 created_at = 3;
+}
+
+message RevisionRes {
+  int32  err_code = 1;
+  optional string  err_msg = 2;
+  gsvc.PageInfo page_info = 3;
+  repeated Revision revision = 4;
+}
+
+service ConfigService {
+  rpc load(KeyReq) returns(LoadRes);
+  rpc save(SaveReq) returns(CommonRes);
+  rpc delete(KeyReq) returns(CommonRes);
+  rpc restore(RestoreReq) returns(CommonRes);
+  rpc revisions(RevisionReq) returns(RevisionRes);
+}

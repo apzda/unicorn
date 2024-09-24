@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package apzda.uc;
+
+import "gsvc/ext.proto";
+import "buf/validate/validate.proto";
+
+option java_package = "com.apzda.cloud.uc.proto";
+option java_multiple_files = true;
+option java_outer_classname = "PrivilegeProto";
+
+option(gsvc.serviceName) = "UcenterService";
+
+message PrivilegeVo {
+  string id = 1;
+  string name = 2;
+  string type = 3;
+  string permission = 4;
+  bool   builtin = 5;
+  string description = 6;
+  string extra = 7;
+}
+
+message PrivilegeDto {
+  string id = 1;
+  string name = 2 [(buf.validate.field).required = true];
+  string type = 3 [(buf.validate.field).required = true];
+  string permission = 4 [(buf.validate.field).required = true];
+  string description = 6;
+  string extra = 7;
+}
+
+message PrivilegeId {
+  string id = 1 [(buf.validate.field).required = true];
+}
+
+message ResourceReq {
+  uint64 pid = 1;
+}
+
+message ResourceVo {
+  string id = 1;
+  string name = 2;
+  string actions = 3;
+  optional string explorer = 4;
+  optional string description = 5;
+  repeated ResourceVo children = 6;
+}
+// 角色查询
+message PrivilegeQuery {
+  optional int32 size = 1;
+  optional  int32 current = 2;
+  optional string query = 3;
+}
+
+message PrivilegeQueryRes {
+  uint64 err_code = 1;
+  optional string err_msg = 2;
+  int32 current = 3;
+  int32 size = 4;
+  int32 total_page = 5;
+  uint64 total_record = 6;
+  repeated PrivilegeVo results = 7;
+}
+
+// 资源列表
+message ResourceRes {
+  uint64 err_code = 1;
+  optional string err_msg = 2;
+  repeated ResourceVo resource = 3;
+}
+// 权限服务
+service PrivilegeService {
+  // 查询
+  rpc query(PrivilegeQuery) returns (PrivilegeQueryRes);
+  // 新增
+  rpc create(PrivilegeDto) returns (gsvc.CommonRes);
+  // 更新
+  rpc update(PrivilegeDto) returns (gsvc.CommonRes);
+  // 删除
+  rpc delete(PrivilegeId) returns (gsvc.CommonRes);
+  // 资源
+  rpc resource(ResourceReq) returns (ResourceRes);
+}

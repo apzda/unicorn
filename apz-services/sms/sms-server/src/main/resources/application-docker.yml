@@ -1,0 +1,7 @@
+apzda:
+  cloud:
+    registry:
+      type: docker
+      name-style: kebab
+    security:
+      meta-repo: redis

@@ -1,0 +1,48 @@
+server.port: 8080
+
+spring:
+  application:
+    name: sms-service
+  messages:
+    basename: messages-sms
+  data:
+    redis:
+      database: 0
+      host: redis
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql:3306/apzda_infra_db?characterEncoding=UTF-8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: Abc12332!
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: false
+
+apzda:
+  cloud:
+    sms:
+      providers:
+        - id: test
+          name: 测试供应商
+          templates:
+            login:
+              template-id: "1234"
+              name: 登录验证码
+      props:
+        thread: 2
+      templates:
+        login:
+          interval: 60s
+          timeout: 15m
+          count-d: 1000
+          count-h: 100
+          count-m: 10
+
+logging:
+  level:
+    com.apzda: info
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSSXXX} %highlight(%-5level) --- [%15.15t] %cyan(%-40.40logger{39}):%-4L - %msg%n"

@@ -1,0 +1,21 @@
+server:
+  port: 30903
+
+spring:
+  application:
+    name: wallet-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/apzda_wallet_db?characterEncoding=UTF-8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: Abc12332!
+  data:
+    redis:
+      database: 1
+      lettuce:
+        pool:
+          enabled: true
+
+logging:
+  level:
+    com.apzda.cloud: trace

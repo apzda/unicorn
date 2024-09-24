@@ -16,7 +16,9 @@
  */
 package com.apzda.cloud.mono.config;
 
+import com.apzda.cloud.common.config.CommonConfig;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 /**
  * @author fengz (windywany@gmail.com)
@@ -24,6 +26,7 @@ import org.springframework.context.annotation.Configuration;
  * @since 1.0.0
  **/
 @Configuration(proxyBeanMethods = false)
+@Import(CommonConfig.class)
 public class AppServerConfig {
 
 }

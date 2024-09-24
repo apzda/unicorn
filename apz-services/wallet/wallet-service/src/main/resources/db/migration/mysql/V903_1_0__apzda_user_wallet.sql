@@ -1,0 +1,101 @@
+CREATE TABLE wallet
+(
+    id         BIGINT UNSIGNED  NOT NULL COMMENT 'id',
+    created_at BIGINT UNSIGNED  NULL     DEFAULT NULL,
+    created_by VARCHAR(32)      NULL COMMENT 'Create User Id',
+    updated_at BIGINT UNSIGNED  NULL     DEFAULT NULL,
+    updated_by VARCHAR(32)      NULL COMMENT 'Last updated by who',
+    deleted    TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Soft Deleted Flag',
+    uid        BIGINT UNSIGNED  NOT NULL COMMENT '用户ID',
+    currency   VARCHAR(6)       NOT NULL COMMENT '货币（币种）',
+    amount     BIGINT UNSIGNED  NOT NULL DEFAULT 0 COMMENT '总余额（amount = balance + frozen)',
+    balance    BIGINT UNSIGNED  NOT NULL DEFAULT 0 COMMENT '可用余额（优先使用, 包括withdrawal）',
+    withdrawal BIGINT UNSIGNED  NOT NULL DEFAULT 0 COMMENT '可提现金额',
+    frozen     BIGINT UNSIGNED  NOT NULL DEFAULT 0 COMMENT '冻结金额',
+    outlay     BIGINT UNSIGNED  NOT NULL DEFAULT 0 COMMENT '总支出金额',
+    locked     TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否锁定: 0-未锁定；1-锁定',
+    block      VARCHAR(32)      NOT NULL DEFAULT '00000000000000000000000000000000' COMMENT '最后交易的区块地址',
+    primary key (`id`),
+    UNIQUE KEY `UDX_UID_CURRENCY` (`uid`, `currency`)
+);
+
+CREATE TABLE wallet_change_log
+(
+    id             BIGINT UNSIGNED  NOT NULL AUTO_INCREMENT COMMENT '交易日志主键',
+    created_at     BIGINT UNSIGNED  NULL     DEFAULT NULL,
+    created_by     VARCHAR(32)      NULL COMMENT 'Create User Id',
+    updated_at     BIGINT UNSIGNED  NULL     DEFAULT NULL,
+    updated_by     VARCHAR(32)      NULL COMMENT 'Last updated by who',
+    deleted        TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Soft Deleted Flag',
+    transaction_id BIGINT UNSIGNED  NOT NULL COMMENT '交易流水ID',
+    uid            BIGINT UNSIGNED  NOT NULL COMMENT '用户ID',
+    currency       VARCHAR(6)       NOT NULL COMMENT '货币（币种）',
+    biz            VARCHAR(12)      NOT NULL COMMENT '业务类型',
+    biz_subject    VARCHAR(24)      NOT NULL COMMENT '业务主题',
+    biz_id         VARCHAR(48)      NOT NULL COMMENT '业务订单编号',
+    amount         BIGINT UNSIGNED  NOT NULL DEFAULT 0 COMMENT '交易金额',
+    pre_balance    BIGINT UNSIGNED  NOT NULL DEFAULT 0 COMMENT '交易发生前余额',
+    balance        BIGINT UNSIGNED  NOT NULL DEFAULT 0 COMMENT '交易发生后余额',
+    pre_frozen     BIGINT UNSIGNED  NOT NULL DEFAULT 0 COMMENT '交易发生前冻金额',
+    frozen         BIGINT UNSIGNED  NOT NULL DEFAULT 0 COMMENT '交易发生后冻金额',
+    outlay         TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '0:收入;1:支出',
+    need_frozen    TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否冻结金额',
+    withdraw_able  TINYINT UNSIGNED NOT NULL DEFAULT 1 COMMENT '是否可提现：0-不可提现；1-可提现',
+    expired_at     BIGINT UNSIGNED  NULL     DEFAULT NULL COMMENT '过期时间',
+    parent_id      BIGINT UNSIGNED  NOT NULL COMMENT '上条记录ID',
+    ip             VARCHAR(256)     NOT NULL COMMENT '业务发生时的IP',
+    block          VARCHAR(32)      NOT NULL COMMENT 'MD5值,区块地址(基于上一个交易的区块地址)',
+    remark         TEXT             NULL     DEFAULT NULL COMMENT '说明',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `UDX_SSID` (`biz`, `biz_subject`, `biz_id`),
+    KEY `IDX_UID_OUT_EX` (`uid`, `currency`, `expired_at`),
+    KEY `IDX_TRANSACTION_ID` (transaction_id)
+) COMMENT '账户变更日志';
+
+CREATE TABLE wallet_transaction
+(
+    id            BIGINT UNSIGNED  NOT NULL AUTO_INCREMENT COMMENT '交易流水主键',
+    created_at    BIGINT UNSIGNED  NULL     DEFAULT NULL,
+    created_by    VARCHAR(32)      NULL COMMENT 'Create User Id',
+    updated_at    BIGINT UNSIGNED  NULL     DEFAULT NULL,
+    updated_by    VARCHAR(32)      NULL COMMENT 'Last updated by who',
+    deleted       TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Soft Deleted Flag',
+    uid           BIGINT UNSIGNED  NOT NULL COMMENT '用户ID',
+    currency      VARCHAR(6)       NOT NULL COMMENT '货币（币种）',
+    biz           VARCHAR(12)      NOT NULL COMMENT '业务类型',
+    biz_subject   VARCHAR(24)      NOT NULL COMMENT '业务主题',
+    biz_id        VARCHAR(48)      NOT NULL COMMENT '业务订单编号',
+    amount        BIGINT UNSIGNED  NOT NULL DEFAULT 0 COMMENT '交易金额',
+    outlay        TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '0:收入;1:支出',
+    need_frozen   TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否冻结金额',
+    withdraw_able TINYINT UNSIGNED NOT NULL DEFAULT 1 COMMENT '是否可提现：0-不可提现；1-可提现',
+    expired_at    BIGINT UNSIGNED  NULL     DEFAULT NULL COMMENT '过期时间',
+    ip            VARCHAR(256)     NOT NULL COMMENT '业务发生时的IP',
+    remark        TEXT             NULL     DEFAULT NULL COMMENT '说明',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `UDX_SSID` (`biz`, `biz_subject`, `biz_id`),
+    KEY `IDX_UID_OUT_EX` (`uid`, `currency`, `expired_at`)
+) COMMENT '交易记录';
+
+CREATE TABLE wallet_outlay_log
+(
+    id                    BIGINT UNSIGNED  NOT NULL COMMENT 'id',
+    created_at            BIGINT UNSIGNED  NULL     DEFAULT NULL,
+    created_by            VARCHAR(32)      NULL COMMENT 'Create User Id',
+    updated_at            BIGINT UNSIGNED  NULL     DEFAULT NULL,
+    updated_by            VARCHAR(32)      NULL COMMENT 'Last updated by who',
+    deleted               TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Soft Deleted Flag',
+    uid                   BIGINT UNSIGNED  NOT NULL COMMENT '用户ID',
+    currency              VARCHAR(6)       NOT NULL COMMENT '货币（币种）',
+    outlay_transaction_id BIGINT UNSIGNED  NOT NULL COMMENT '支出流水号',
+    transaction_id        BIGINT UNSIGNED  NOT NULL COMMENT '收入流水号',
+    amount                BIGINT UNSIGNED  NOT NULL COMMENT '支出金额',
+    use_amount            BIGINT UNSIGNED  NOT NULL COMMENT '使用金额',
+    income                BIGINT UNSIGNED  NOT NULL COMMENT '收入金额',
+    balance               BIGINT UNSIGNED  NOT NULL COMMENT '收入余额',
+    margin                BIGINT UNSIGNED  NOT NULL COMMENT '差额',
+    expired_at            BIGINT UNSIGNED  NULL     DEFAULT NULL COMMENT '收入过期时间',
+    primary key (id),
+    INDEX IDX_UID_CURRENCY_TX_ID (uid, currency, transaction_id),
+    INDEX IDX_UID_CURRENCY_EXPIRE_AT (uid, currency, expired_at)
+) COMMENT '支出日志(过期机制启用时使用此表记录支出与收入的对应关系，会过期的收入流水写一笔0支出的流水)';

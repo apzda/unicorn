@@ -2,33 +2,21 @@
 
 ## 模块说明
 
-| # | 名称          | 说明              |
-|:-:|:------------|:----------------|
-| 1 | api-gateway | 微服务部署时的API网关服务器 |
-| 2 | app-common  | 公共类库、公共配置、网关规则  |
-| 3 | app-i18n    | 国际化             |
-| 4 | app-server  | 单体应用启动器         |
-| 5 | services    | 应用模块(服务)        | 
+| # | 名称           | 说明              |
+|:--|:-------------|:----------------|
+| 1 | app-common   | 公共类库、公共配置、网关规则  |
+| 2 | app-gateway  | 微服务部署时的API网关服务器 |
+| 3 | app-server   | 单体应用启动器         |
+| 4 | app-services | 应用模块(服务)工程      |
+| 5 | apz-services | 内置模块(服务)工程      |
 
 ## 中间件依赖
 
 1. MySQL
-2. Redis
+2. Redis (可选)
+3. RocketMQ (可选)
 
 > 启动前需要根据实际情况配置好它们.
-
-## 内置模块(服务)
-
-1. [配置模块](https://github.com/apzda/config)
-2. [验证码模块](https://github.com/apzda/captcha)
-3. [存储模块](https://github.com/apzda/oss)
-4. [审核日志模块](https://github.com/apzda/audit)
-5. [用户中心模块](https://github.com/apzda/ucenter)
-
-## 可选模块(服务)
-
-1. [短信模块](https://github.com/apzda/sms)
-2. [信使模块](https://github.com/apzda/messenger)
 
 ## 运行
 

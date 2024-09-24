@@ -1,0 +1,21 @@
+spring:
+  config:
+    import: classpath:application-flyway.yml
+  data:
+    redis:
+      database: 0
+      host: localhost
+      port: 6379
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: Abc12332!
+    url: jdbc:mysql://localhost:3307/demo_db?characterEncoding=UTF-8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    baseline-on-migrate: true
+logging:
+  level:
+    com.apzda: debug

@@ -18,13 +18,11 @@ package com.apzda.cloud.mono;
 
 import com.apzda.cloud.audit.server.EnableAuditServer;
 import com.apzda.cloud.captcha.server.EnableCaptchaServer;
-import com.apzda.cloud.common.config.CommonConfig;
 import com.apzda.cloud.config.server.EnableConfigServer;
 import com.apzda.cloud.oss.server.EnableOssServer;
 import com.apzda.cloud.uc.server.EnableUCenterServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
 
 /**
  * @author fengz (windywany@gmail.com)
@@ -32,10 +30,9 @@ import org.springframework.context.annotation.Import;
  * @since 1.0.0
  **/
 @SpringBootApplication
-@Import(CommonConfig.class)
 @EnableConfigServer
-@EnableCaptchaServer
 @EnableAuditServer
+@EnableCaptchaServer
 @EnableOssServer
 @EnableUCenterServer
 public class AppServer {

@@ -1,0 +1,169 @@
+syntax = "proto3";
+
+package apzda.uc;
+
+import "gsvc/ext.proto";
+import "buf/validate/validate.proto";
+
+option java_package = "com.apzda.cloud.uc.proto";
+option java_multiple_files = true;
+option java_outer_classname = "ClientProto";
+
+option(gsvc.serviceName) = "UcenterService";
+
+enum MetaValueType {
+  STRING = 0;
+  INTEGER = 1;
+  LONG = 2;
+  DOUBLE = 3;
+  FLOAT = 4;
+  OBJECT = 5;
+}
+
+message UserMeta {
+  string name = 1;
+  string value = 2;
+  MetaValueType type = 3;
+}
+
+message Department {
+  string id = 1;
+  string name = 2;
+  optional string desc = 3;
+  optional string icon = 4;
+  optional string job_title = 5;
+  optional uint32 job_level = 6;
+}
+
+message Organization {
+  string id = 1;
+  string name = 2;
+  optional string desc = 3;
+  optional string icon = 4;
+  optional string job_title = 5;
+  optional uint32 job_level = 6;
+  repeated Department department = 7;
+}
+
+message RoleVo {
+  string id = 1;
+  string role = 2;
+  string name = 3;
+  string description = 4;
+  bool builtin = 5;
+  string tenant_id = 6;
+}
+
+message UserInfo {
+  int32 err_code = 1;
+  optional string err_msg = 2;
+  string uid = 3;
+  string username = 4 ;
+  string password = 5;
+  bool account_non_expired = 6;
+  bool account_non_locked = 7;
+  bool credentials_non_expired = 8;
+  bool enabled = 9;
+  optional string avatar = 10;
+  optional string phone = 11;
+  optional string email = 12;
+  optional string first_name = 13;
+  optional string last_name = 14;
+  repeated string authority = 15;
+  repeated UserMeta meta = 16;
+  repeated Organization org = 17;
+  optional string recommend_code = 18;
+  optional uint64 referrer_id = 19;
+  optional string referrers = 20;
+  optional uint32 referrer_level = 21;
+  optional string channel = 22;
+  optional string device = 23;
+  optional string status = 24;
+  optional string ip = 25;
+  optional string remark = 26;
+  repeated RoleVo role = 27;
+  uint64 id = 28;
+}
+
+message UserMetaResp {
+  int32 err_code = 1;
+  optional string err_msg = 2;
+  repeated UserMeta meta = 3;
+}
+
+message OrganizationResp {
+  int32 err_code = 1;
+  optional string err_msg = 2;
+  repeated Organization org = 3;
+}
+
+message AuthorityResp {
+  int32 err_code = 1;
+  optional string err_msg = 2;
+  repeated string authority = 3;
+}
+
+message Request {
+  string username = 1 [(buf.validate.field).required = true];
+  optional string meta_name = 2;
+  optional bool all = 3;
+  optional string tenant_id = 4;
+}
+
+message Query {
+  optional uint64 id = 1;
+  optional string phone = 2;
+  optional string email = 3;
+  optional string rec_code = 4;
+  optional string iac = 5;
+}
+
+
+// 开户请求
+message OpenAccountRequest {
+  string        username = 1 [(buf.validate.field).required = true];
+  string        display_name = 2 [(buf.validate.field).required = true];
+  optional string phone = 3;
+  string        password = 5 [(buf.validate.field).required = true];
+  optional string email = 4;
+  optional string avatar = 6;
+  optional string phone_iac = 7;
+  repeated string roles = 8;
+  optional string rec_code = 9;
+  optional string channel = 10;
+  optional string gender = 11;
+  optional string first_name = 12;
+  optional string last_name = 13;
+  optional string device = 14;
+  optional string provider = 15;
+}
+// 开户响应
+message OpenAccountResponse {
+  int32 err_code = 1;
+  optional string err_msg = 2;
+  uint64 uid = 3;
+}
+
+// 重置用户密码请求
+message ResetPasswordRequest {
+  string username = 1 [(buf.validate.field).required = true];
+  string password = 2 [(buf.validate.field).required = true, (buf.validate.field).string.min_len = 6];
+}
+
+service UcenterService {
+  rpc getUserInfo(Request) returns (UserInfo);
+  rpc query(Query) returns (UserInfo);
+  rpc getMetas(Request) returns (UserMetaResp);
+  rpc getAuthorities(Request) returns (AuthorityResp);
+  rpc getOrganizations(Request) returns(OrganizationResp);
+  rpc openAccount(OpenAccountRequest) returns (OpenAccountResponse);
+  rpc resetPassword(ResetPasswordRequest) returns (gsvc.CommonRes);
+}
+
+message SyncRequest {
+  string configuration = 1 [(buf.validate.field).required = true];
+}
+
+service ConfigureService {
+  rpc syncConfiguration(SyncRequest) returns(gsvc.CommonRes);
+}

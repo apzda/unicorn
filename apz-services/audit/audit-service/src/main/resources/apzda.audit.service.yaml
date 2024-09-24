@@ -1,0 +1,24 @@
+# jpa
+spring:
+  jpa:
+    properties:
+      hibernate:
+        auto_quote_keyword: true
+# ucenter
+apzda:
+  ucenter:
+    security:
+      resources:
+        auditlog:
+          name: AuditLog
+          description: 系统审计日志
+          actions: r,d
+          privileges:
+            "[*:auditlog.*]":
+              name: AuditLogFullAccess
+              type: resource
+              description: 管理审计日志权限
+            "[r:auditlog.*]":
+              name: AuditLogReadOnlyAccess
+              type: resource
+              description: 只读访问审计日志权限

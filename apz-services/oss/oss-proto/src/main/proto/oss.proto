@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+package apzda.oss;
+
+import "gsvc/ext.proto";
+import "buf/validate/validate.proto";
+
+option java_package = "com.apzda.cloud.oss.proto";
+option java_multiple_files = true;
+option java_outer_classname = "OssProto";
+
+message FileInfo {
+  uint32 index = 1; // 第几个文件
+  optional string url = 2; // 文件的URL
+  optional string path = 3; // 文件的绝对路径
+  optional string backend = 4;// 文件的后端存储
+  int32 error = 5; // 0: 正常; 其它值出错
+  optional string message = 6; // 当error!=0时的错误提示
+  optional bool exist = 7; // 文件是否存在，用于查询
+  optional uint64 length = 8;// 文件长度
+  optional string file_id = 9;// 文件ID
+  optional string ext = 10;
+  optional string filename = 11;
+  optional uint64 create_time = 12;
+  optional string content_type = 13;
+}
+
+message UploadReq {
+  optional string name = 1;
+  repeated gsvc.UploadFile files = 2 [(buf.validate.field).repeated.min_items = 0]; // 文件列表
+  optional gsvc.UploadFile file = 3;
+  optional string disables = 4;
+  optional string content = 5;
+  optional string path = 20;
+}
+
+/**
+ * 文件上传结果.
+ */
+message UploadRes {
+  int32 err_code = 1;
+  optional string err_msg = 2;
+  repeated FileInfo files = 3; // 文件列表
+}
+
+message ChunkUploadReq {
+  string file_name = 1 [(buf.validate.field).required = true];
+  uint32 total_chunks = 2 [(buf.validate.field).uint32.gte = 1];
+  uint32 chunk_number = 3 [(buf.validate.field).uint32.gte = 1];
+  uint32 chunk_size = 4  [(buf.validate.field).required = true, (buf.validate.field).uint32.gte = 1];
+  uint64 total_size = 5 [(buf.validate.field).required = true, (buf.validate.field).uint64.gte = 1];
+  optional string file_id = 6;
+  optional string path = 7;
+  optional string disables = 8;
+  gsvc.UploadFile file = 50;
+}
+
+message  ChunkUploadRes {
+  int32 err_code = 1;
+  optional string err_msg = 2;
+  uint32 chunk_number = 3;
+  optional FileInfo file = 50;
+}
+
+message Query {
+  string file_id = 1 [(buf.validate.field).required = true];
+}
+
+service OssService {
+  /**
+   * 上传文件
+   */
+  rpc upload(UploadReq) returns (UploadRes);
+  /**
+   * 分片上传
+   */
+  rpc chunkUpload(ChunkUploadReq) returns(ChunkUploadRes);
+  /**
+   * 查检分片是否存在（用于断点续传）。
+   */
+  rpc chunkCheck(ChunkUploadReq) returns(ChunkUploadRes);
+  /**
+   * 查询上传结果
+   */
+  rpc query(Query) returns(ChunkUploadRes);
+}
+

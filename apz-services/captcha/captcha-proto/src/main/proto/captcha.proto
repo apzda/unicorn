@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package apzda.captcha;
+import "gsvc/ext.proto";
+import "buf/validate/validate.proto";
+
+option java_package = "com.apzda.cloud.captcha.proto";
+option java_multiple_files = true;
+option java_outer_classname = "CaptchaProto";
+
+message CreateReq {
+  optional string uuid = 1;
+  optional uint32 width = 20;
+  optional uint32 height = 21;
+}
+
+message CreateRes {
+  int32 err_code = 1;
+  optional string err_msg = 2;
+  optional string type = 3;
+  optional string captcha = 4;
+  optional string id = 5;
+  optional uint64 expire_time = 6;
+}
+
+message  ValidateReq {
+  string uuid = 1;
+  string id = 2;
+  string code = 3 [(buf.validate.field).required = true];
+}
+
+message ValidateRes {
+  int32 err_code = 1;
+  optional string err_msg = 2;
+  optional bool reload = 3;
+}
+
+message CheckReq {
+  string uuid = 1 [(buf.validate.field).required = true];
+  string id = 2 [(buf.validate.field).required = true];
+}
+
+service CaptchaService {
+  rpc create(CreateReq) returns (CreateRes);
+  rpc validate(ValidateReq) returns(ValidateRes);
+  rpc check(CheckReq) returns(gsvc.CommonRes);
+}

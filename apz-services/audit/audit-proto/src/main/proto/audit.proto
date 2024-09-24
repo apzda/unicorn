@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package apzda.audit;
+
+import "gsvc/ext.proto";
+import "buf/validate/validate.proto";
+
+option java_package = "com.apzda.cloud.audit.proto";
+option java_multiple_files = true;
+option java_outer_classname = "AuditProto";
+
+
+message Arg {
+  string value = 1;
+  uint32 index = 2;
+}
+
+message AuditLog {
+  uint64 timestamp = 1 [(buf.validate.field).required = true];
+  string userid = 2 [(buf.validate.field).required = true];
+  string activity = 3 [(buf.validate.field).required = true];
+  optional string message = 4;
+  repeated Arg arg = 5;
+  optional string old_json_value = 6;
+  optional string new_json_value = 7;
+  optional string tenant_id = 8;
+  optional uint64 id = 10;
+  optional string ip = 11;
+  optional string level = 12;
+  optional bool template = 13;
+  optional string runas = 14;
+  optional string device = 15;
+}
+
+message Query {
+  optional string user_id = 1;
+  optional string activity = 2;
+  optional uint64 start_time = 3;
+  optional uint64 end_time = 4;
+  optional gsvc.Pager pager = 5;
+  optional string tenant_id = 6;
+  optional string runas = 7;
+  optional string device = 8;
+}
+
+message QueryRes {
+  int32 err_code = 1;
+  optional string err_msg = 2;
+  repeated AuditLog log = 3;
+  gsvc.PageInfo pager = 4;
+}
+
+service AuditService {
+  rpc log(AuditLog) returns(gsvc.CommonRes);
+  rpc logs(Query) returns(QueryRes);
+  rpc myLogs(Query) returns(QueryRes);
+}

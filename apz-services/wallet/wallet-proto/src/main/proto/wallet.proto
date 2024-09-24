@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package apzda.wallet;
+
+import "gsvc/ext.proto";
+import "buf/validate/validate.proto";
+
+option java_package = "com.apzda.cloud.wallet.proto";
+option java_multiple_files = true;
+option java_outer_classname = "WalletProto";
+
+message TradeDTO {
+  uint64 uid = 1 [(buf.validate.field).uint64.gt = 0];
+  string currency = 2 [(buf.validate.field).required = true];
+  double amount = 3 [(buf.validate.field).double.gt = 0];
+  string biz = 4 [(buf.validate.field).required = true];
+  string biz_subject = 5 [(buf.validate.field).required = true];
+  string biz_id = 6 [(buf.validate.field).required = true];
+  optional uint64 expired_at = 7;
+  optional string remark = 8;
+}
+
+message TransactionVO {
+  uint64 uid = 1 [(buf.validate.field).uint64.gt = 0];
+  string currency = 2 [(buf.validate.field).required = true];
+  double amount = 3 [(buf.validate.field).double.gt = 0];
+  bool outlay = 4;
+  string biz = 5;
+  string biz_subject = 6;
+  string biz_id = 7;
+  uint64 expired_at = 8;
+  uint32 scale = 9;
+  uint32 precision = 10;
+}
+
+message WalletDTO {
+  uint64 uid = 1 [(buf.validate.field).uint64.gt = 0];
+  string currency = 2 [(buf.validate.field).required = true];
+  double amount = 3;
+  double balance = 4;
+  double frozen = 5;
+  double withdrawal = 6;
+  double outlay = 7;
+  bool locked = 8;
+  bool expire_able = 9;
+  bool withdraw_able = 10;
+  double rate = 11;
+  uint32 precision = 12;
+  uint64 scale = 13;
+  uint64 id = 14;
+}
+
+/*
+  钱包服务
+ */
+service WalletService {
+  rpc trade(TradeDTO) returns(TransactionVO);
+  rpc wallet(WalletDTO) returns (WalletDTO);
+}

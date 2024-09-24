@@ -1,0 +1,166 @@
+syntax = "proto3";
+
+package apzda.uc;
+
+import "google/protobuf/empty.proto";
+import "gsvc/ext.proto";
+import "buf/validate/validate.proto";
+
+import "role.proto";
+
+option java_package = "com.apzda.cloud.uc.proto";
+option java_multiple_files = true;
+option java_outer_classname = "AccountProto";
+
+option(gsvc.serviceName) = "UcenterService";
+// 账户VO
+message Account {
+  uint64 id = 1;
+  string username = 2;
+  string display_name = 3;
+  string phone = 4;
+  string email = 5;
+  string status = 6;
+  repeated apzda.uc.Role roles = 7;
+}
+
+// 账户列表
+message AccountListRequest {
+  optional int32 size = 1;
+  optional  int32 current = 2;
+  optional string username = 3;
+  optional string phone = 4;
+  optional string status = 5;
+  optional string email = 6;
+  optional string id = 7;
+}
+
+message AccountListResponse {
+  uint64 err_code = 1;
+  optional string err_msg = 2;
+  int32 current = 3;
+  int32 size = 4;
+  int32 total_page = 5;
+  uint64 total_record = 6;
+  repeated Account results = 7;
+}
+
+// 创建账户
+message CreateAccountRequest {
+  string        username = 1 [(buf.validate.field).required = true];
+  string        display_name = 2 [(buf.validate.field).required = true];
+  optional  string phone = 3;
+  optional  string email = 4;
+  string        password = 5 [(buf.validate.field).required = true];
+  string        confirm_password = 6 [(buf.validate.field).required = true];
+  bool          reset_password = 7;
+  string        status = 8 [(buf.validate.field).required = true];
+  repeated  string roles = 9;
+  optional  string avatar = 10;
+  optional  string phone_iac = 11;
+  optional  string rec_code = 12;
+  optional  string channel = 13;
+  optional  string gender = 14;
+  optional  string first_name = 15;
+  optional  string last_name = 16;
+  optional string device = 17;
+}
+
+// 创建账户响应
+message CreateAccountResponse {
+  int32 err_code = 1;
+  optional string err_msg = 2;
+  uint64 uid = 3;
+}
+// 修改账户
+message UpdateAccountRequest {
+  string        username = 1 [(buf.validate.field).required = true];
+  string        display_name = 2 [(buf.validate.field).required = true];
+  string        phone = 3 [(buf.validate.field).required = true];
+  string        email = 4 [(buf.validate.field).required = true];
+  optional  string       password = 5;
+  optional  string       confirm_password = 6;
+  string        status = 8 [(buf.validate.field).required = true];
+  repeated  string roles = 9;
+}
+//修改用户密码请求
+message UpdatePasswordRequest {
+  // 确认密码
+  string confirm_password = 1 [(buf.validate.field).required = true, (buf.validate.field).string.min_len = 6];
+  // 新密码
+  string new_password = 2 [(buf.validate.field).required = true, (buf.validate.field).string.min_len = 6];
+  // 原密码
+  string old_password = 3 [(buf.validate.field).required = true, (buf.validate.field).string.min_len = 6];
+  // 当前用户
+  gsvc.CurrentUser current_user = 4;
+}
+// 修改个人信息请求
+message UpdateAccountInfoRequest {
+  gsvc.CurrentUser current_user = 1;
+  string    display_name = 2;
+  string    email = 3;
+  string    phone = 4;
+  optional  string first_name = 5;
+  optional  string last_name = 6;
+  optional  string phone_prefix = 7;
+}
+// 用户ID
+message UserId {
+  uint64 id = 1 [(buf.validate.field).required = true, (buf.validate.field).uint64.gt = 1];
+}
+// 查看授权码响应
+message SwitchCodeRes {
+  uint64 err_code = 1;
+  optional string err_msg = 2;
+  string code = 3;
+}
+// 获取多因素配置响应
+message MfaConfigRes {
+  uint64 err_code = 1;
+  optional string err_msg = 2;
+  string type = 3;
+  optional string config = 4;
+  optional string secret_key = 5;
+  optional bool initialized = 6;
+}
+// 多因素验证请求
+message VerifyMfaReq {
+  string code = 1 [(buf.validate.field).required = true];
+  string type = 2 [(buf.validate.field).required = true];
+  optional  string password = 3;
+}
+// 分配角色
+// 修改账户
+message UpdateRoleRequest {
+  string        username = 1 [(buf.validate.field).required = true];
+  repeated  string roles = 2 [(buf.validate.field).repeated.min_items = 1];
+}
+// 账户服务
+service AccountService {
+  // 列表。 权限: r:user
+  rpc list(AccountListRequest) returns (AccountListResponse);
+  // 创建账户: 权限: c:user
+  rpc createAccount(CreateAccountRequest) returns (CreateAccountResponse);
+  // 修改账户: 权限: u:user
+  rpc updateAccount(UpdateAccountRequest) returns (gsvc.CommonRes);
+  // 删除用户
+  rpc deleteAccount(UserId) returns (gsvc.CommonRes);
+  // 修改用户密码
+  rpc updatePassword(UpdatePasswordRequest) returns(gsvc.CommonRes);
+  // 修改个人信息
+  rpc updateMyAccount(UpdateAccountInfoRequest) returns (gsvc.CommonRes);
+  // 踢下线
+  rpc kickoff(Account) returns(gsvc.CommonRes);
+  // 授权码
+  rpc switchCode(google.protobuf.Empty) returns (SwitchCodeRes);
+  // 获取MFA配置
+  rpc mfaConfig(google.protobuf.Empty) returns (MfaConfigRes);
+  // 配置MFA
+  rpc setupMfa(VerifyMfaReq) returns (gsvc.CommonRes);
+  // 验证MFA
+  rpc verifyMfa(VerifyMfaReq) returns (gsvc.CommonRes);
+  // 重置MFA
+  rpc resetMfa(google.protobuf.Empty) returns (MfaConfigRes);
+  // 更新用户角色
+  rpc assignRole(UpdateRoleRequest) returns (gsvc.CommonRes);
+}

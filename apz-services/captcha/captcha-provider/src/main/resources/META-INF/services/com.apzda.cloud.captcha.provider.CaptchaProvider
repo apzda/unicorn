@@ -1,0 +1,3 @@
+com.apzda.cloud.captcha.provider.ImageCaptchaProvider
+com.apzda.cloud.captcha.provider.SliderCaptchaProvider
+com.apzda.cloud.captcha.provider.DragCaptchaProvider
