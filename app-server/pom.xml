@@ -58,6 +58,10 @@
             <groupId>com.apzda.cloud</groupId>
             <artifactId>uc-service</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.apzda.cloud</groupId>
+            <artifactId>wallet-service</artifactId>
+        </dependency>
         <!-- application services -->
 
         <!-- application library -->
