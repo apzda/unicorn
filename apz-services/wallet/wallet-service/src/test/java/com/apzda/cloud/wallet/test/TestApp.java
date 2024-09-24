@@ -44,7 +44,7 @@ public class TestApp {
         @Bean
         @ServiceConnection
         MySQLContainer<?> mysql() {
-            return new MySQLContainer<>(DockerImageName.parse("mysql:8.0.35")).withDatabaseName("apzda_wallet_db")
+            return new MySQLContainer<>(DockerImageName.parse("mysql:8.0.35")).withDatabaseName("demo_db")
                 .withUsername("root")
                 .withPassword("Abc12332!")
                 .withStartupTimeout(Duration.ofMinutes(3));

@@ -29,7 +29,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.annotation.DirtiesContext;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.utility.DockerImageName;
@@ -59,7 +58,7 @@ public class TestApp {
         @Bean
         @ServiceConnection
         MySQLContainer<?> mysql() {
-            return new MySQLContainer<>(DockerImageName.parse("mysql:8.0.36")).withDatabaseName("apzda_uc_db")
+            return new MySQLContainer<>(DockerImageName.parse("mysql:8.0.36")).withDatabaseName("demo_db")
                 .withUsername("root")
                 .withPassword("Abc12332!")
                 .withStartupTimeout(Duration.ofMinutes(3));
