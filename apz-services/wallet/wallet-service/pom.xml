@@ -27,7 +27,10 @@
         <dependency>
             <groupId>com.apzda.cloud</groupId>
             <artifactId>domain</artifactId>
-            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.apzda.cloud</groupId>
+            <artifactId>apzda-cloud-gsvc-seata</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
