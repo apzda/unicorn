@@ -13,7 +13,6 @@
 
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
-        <skipStaging>true</skipStaging>
     </properties>
 
     <dependencies>
