@@ -219,7 +219,7 @@ public class ConfigureServiceImpl implements ConfigureService {
      * @param role 角色
      */
     private void syncRole(String rid, SecurityConfigureProperties.Role role) {
-        val r = roleRepository.findByRole(rid);
+        val r = roleRepository.findByRoleAndTenantId(rid, 0L);
         val entity = r.orElse(new Role());
         entity.setTenantId(0L);
         entity.setRole(rid);
@@ -235,7 +235,7 @@ public class ConfigureServiceImpl implements ConfigureService {
      * @param rid 角色
      */
     private void deleteRole(String rid) {
-        val r = roleRepository.findByRole(rid);
+        val r = roleRepository.findByRoleAndTenantId(rid, 0L);
         if (r.isPresent()) {
             val role = r.get();
             rolePrivilegeRepository.deleteByRoleId(role.getId());
