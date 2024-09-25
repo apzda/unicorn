@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.apzda.cloud</groupId>
         <artifactId>apz-services</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>2.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>wallet</artifactId>
@@ -25,18 +25,18 @@
             <dependency>
                 <groupId>com.apzda.cloud</groupId>
                 <artifactId>wallet-proto</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>2.0.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.apzda.cloud</groupId>
                 <artifactId>wallet-client</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>2.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>com.apzda.cloud</groupId>
                 <artifactId>wallet-service</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>2.0.0-SNAPSHOT</version>
             </dependency>
 
         </dependencies>
