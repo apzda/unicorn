@@ -125,7 +125,7 @@ class ConfigServiceImplTest {
         assertThat(res2).isNotNull();
         assertThat(res2.getErrCode()).isEqualTo(0);
 
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(3);
         // when
         setting = settingService.load(TestSetting.class);
         // then
@@ -154,7 +154,7 @@ class ConfigServiceImplTest {
         val restoreRes = configService.restore(restoreReq);
         // then
         assertThat(restoreRes.getErrCode()).isEqualTo(0);
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(3);
         // when
         setting = settingService.load(TestSetting.class);
         // then
@@ -188,7 +188,7 @@ class ConfigServiceImplTest {
         assertThat(saved).isTrue();
 
         // when
-        // TimeUnit.SECONDS.sleep(2);
+        TimeUnit.SECONDS.sleep(3);
         val cSetting = settingService.load(TestSetting.class);
         // then
         assertThat(cSetting).isNotNull();
@@ -210,7 +210,7 @@ class ConfigServiceImplTest {
         // then
         assertThat(saved).isTrue();
         // when
-        // TimeUnit.SECONDS.sleep(2);
+        TimeUnit.SECONDS.sleep(3);
         val cSetting = settingService.load(TestSetting.class);
         // then
         assertThat(cSetting).isNotNull();
@@ -238,7 +238,7 @@ class ConfigServiceImplTest {
         assertThat(restored).isTrue();
 
         // given
-        // TimeUnit.SECONDS.sleep(2);
+        TimeUnit.SECONDS.sleep(3);
         // when
         val setting = settingService.load(TestSetting.class);
         // then
