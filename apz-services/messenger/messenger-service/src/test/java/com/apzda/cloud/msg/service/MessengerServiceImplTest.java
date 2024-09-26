@@ -25,6 +25,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.MySQLContainer;
@@ -47,7 +48,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ComponentScan({ "com.apzda.cloud.msg.domain.service", "com.apzda.cloud.msg.service", "com.apzda.cloud.msg.converter" })
 @MapperScan("com.apzda.cloud.msg.domain.mapper")
 @EnableConfigurationProperties({ MessengerServiceProperties.class, ServiceConfigProperties.class })
-@Sql(value = "classpath:/mailbox.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
+@Sql(value = "classpath:mailbox.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
+@ActiveProfiles("flyway")
 class MessengerServiceImplTest {
 
     @Autowired
@@ -101,7 +103,7 @@ class MessengerServiceImplTest {
     }
 
     @Test
-    @Sql("classpath:/delivery.sql")
+    @Sql("classpath:delivery.sql")
     void delivery() {
         val pageRequest = PageRequest.of(0, 2, Sort.by(Sort.Order.asc("id")));
         val pager = PagerUtils.to(pageRequest);

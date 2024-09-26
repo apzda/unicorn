@@ -11,10 +11,6 @@ spring:
     url: jdbc:mysql://localhost:3307/demo_db?characterEncoding=UTF-8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
     username: root
     password: Abc12332!
-  flyway:
-    enabled: true
-    out-of-order: true
-    validate-on-migrate: false
   data:
     redis:
       database: 15

@@ -37,7 +37,7 @@ import org.springframework.test.context.ContextConfiguration;
 @EnableConfigServer
 @EnableAuditServer
 @EnableCaptchaServer
-@ActiveProfiles({ "test" })
+@ActiveProfiles({ "flyway", "test" })
 public class TestBase {
 
 }
