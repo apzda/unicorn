@@ -117,7 +117,7 @@ public class DragCaptchaProvider implements CaptchaProvider {
                 return false;
             }
             val size = dto.points.size();
-            if (size < props.getLong("min-points", 15) || size > props.getLong("max-points", 500)) {
+            if (size < props.getLong("min-points", 15) || size > props.getLong("max-points", 1000)) {
                 return false;
             }
 

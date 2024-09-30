@@ -73,6 +73,8 @@ public class SliderCaptchaProvider implements CaptchaProvider {
 
     private String path;
 
+    private boolean testMode;
+
     @Override
     public void init(@NonNull CaptchaStorage storage, @NonNull Props props) throws Exception {
         this.captchaStorage = storage;
@@ -80,6 +82,7 @@ public class SliderCaptchaProvider implements CaptchaProvider {
         this.noise = props.getInt("noise", 1);
         this.tolerant = props.getInt("tolerant", 5);
         this.path = props.getString("path", "slider");
+        this.testMode = props.getBool("test-mode", false);
 
         List<File> images = loadImages(false);
         imagesCnt = images.size();
@@ -111,11 +114,7 @@ public class SliderCaptchaProvider implements CaptchaProvider {
 
         val originalFile = imagesCache.get(imgIdx);
         val sliderFile = sliderCache.get(sliderIdx);
-        SerializableStream noiseFile = null;
-
-        if (noise > 0) {
-            noiseFile = sliderCache.get(sliderIdx == sliders.size() - 1 ? sliderIdx - 1 : sliderIdx + 1);
-        }
+        val noiseFile = sliderCache.get(sliderIdx == sliders.size() - 1 ? sliderIdx - 1 : sliderIdx + 1);
 
         val sliderCaptcha = SliderUtil.createSliderCaptcha(sliderFile, noiseFile, originalFile, watermark, noise);
         val ca = new Captcha();
@@ -151,8 +150,7 @@ public class SliderCaptchaProvider implements CaptchaProvider {
         }
         val xPos = Integer.parseInt(ca.getCode());
         val randomX = Integer.parseInt(xy.get(0));
-        if (Math.abs(randomX - xPos) <= tolerant) {
-            // captchaStorage.remove(uuid, captcha);
+        if (testMode || Math.abs(randomX - xPos) <= tolerant) {
             return ValidateStatus.OK;
         }
         if (removeOnInvalid) {
