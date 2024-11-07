@@ -34,7 +34,7 @@ import java.lang.annotation.*;
 @PropertySource(value = "classpath:apzda.audit.service.yaml", factory = YamlPropertySourceFactory.class,
         name = "audit-builtin-cfg")
 @Import(AuditConfig.class)
-@ComponentScan({ "com.apzda.cloud.audit.facade", "com.apzda.cloud.audit.domain" })
+@ComponentScan({ "com.apzda.cloud.audit.facade", "com.apzda.cloud.audit.domain", "com.apzda.cloud.audit.controller" })
 @Documented
 public @interface EnableAuditServer {
 

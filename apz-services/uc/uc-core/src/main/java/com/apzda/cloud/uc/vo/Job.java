@@ -19,6 +19,8 @@ package com.apzda.cloud.uc.vo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author fengz (windywany@gmail.com)
  * @version 1.0.0
@@ -26,7 +28,7 @@ import lombok.Data;
  **/
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Job {
+public class Job implements Serializable {
 
     private String id;
 

@@ -41,6 +41,9 @@ import org.springframework.web.servlet.function.RouterFunction;
 import org.springframework.web.servlet.function.RouterFunctions;
 import org.springframework.web.servlet.function.ServerResponse;
 
+import static com.apzda.cloud.oss.config.OssConfigProperties.DOWNLOAD_BEAN_NAME;
+import static com.apzda.cloud.oss.config.OssConfigProperties.PREVIEW_BEAN_NAME;
+
 /**
  * @author fengz (windywany@gmail.com)
  * @version 1.0.0
@@ -99,7 +102,7 @@ public class OssServiceConfiguration implements InitializingBean {
 
     @Bean("previewOssImageFunc")
     @ConditionalOnProperty(value = "apzda.cloud.oss.server.preview-path")
-    @ConditionalOnMissingBean(name = "previewOssImageFunc")
+    @ConditionalOnMissingBean(name = PREVIEW_BEAN_NAME)
     RouterFunction<ServerResponse> previewOssImageFunc(
             @Value("${apzda.cloud.oss.server.preview-path}") String previewPath) {
         val path = "/" + StringUtils.strip(previewPath, "/") + "/";
@@ -113,7 +116,7 @@ public class OssServiceConfiguration implements InitializingBean {
 
     @Bean("downloadOssFileFunc")
     @ConditionalOnProperty(value = "apzda.cloud.oss.server.download-path")
-    @ConditionalOnMissingBean(name = "downloadOssFileFunc")
+    @ConditionalOnMissingBean(name = DOWNLOAD_BEAN_NAME)
     RouterFunction<ServerResponse> downloadOssFileFunc(
             @Value("${apzda.cloud.oss.server.download-path}") String downloadPath) {
         val path = "/" + StringUtils.strip(downloadPath, "/") + "/";

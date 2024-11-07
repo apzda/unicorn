@@ -24,6 +24,7 @@ import com.apzda.cloud.gsvc.ext.GsvcExt;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +32,6 @@ import lombok.val;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -99,7 +99,6 @@ public class AuditServiceImpl implements AuditService {
     }
 
     @Override
-    @PreAuthorize("@authz.iCan('r:auditlog')")
     @Transactional(readOnly = true)
     public QueryRes logs(Query request) {
         return query(request);
@@ -115,7 +114,8 @@ public class AuditServiceImpl implements AuditService {
         return query(Query.newBuilder(request).setUserId(id).build());
     }
 
-    private QueryRes query(Query request) {
+    @Nonnull
+    private QueryRes query(@Nonnull Query request) {
         val pager = request.getPager();
         val pr = PagerUtils.of(pager);
         val logs = auditLogRepository

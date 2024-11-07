@@ -36,6 +36,10 @@ import java.util.Map;
 @Data
 public class OssConfigProperties {
 
+    public static final String PREVIEW_BEAN_NAME = "downloadOssFileFunc";
+
+    public static final String DOWNLOAD_BEAN_NAME = "downloadOssFileFunc";
+
     /**
      * 存储后端
      */

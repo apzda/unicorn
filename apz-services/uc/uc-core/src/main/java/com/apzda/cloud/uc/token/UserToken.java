@@ -88,6 +88,8 @@ public class UserToken implements JwtToken, Serializable {
 
     private String mfa;
 
+    private String landingUrl;
+
     private boolean locked;
 
     private boolean credentialsExpired;
