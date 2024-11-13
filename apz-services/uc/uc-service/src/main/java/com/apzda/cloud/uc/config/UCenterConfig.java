@@ -58,6 +58,8 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -182,6 +184,7 @@ public class UCenterConfig implements ApplicationContextAware {
 
         @Bean
         @ConditionalOnProperty(prefix = "apzda.ucenter.server.endpoint", name = "refresh-token", matchIfMissing = true)
+        @Order(Ordered.HIGHEST_PRECEDENCE)
         SecurityFilterRegistrationBean<AbstractProcessingFilter> refreshTokenFilter(
                 UCenterConfigProperties ucenterConfigProperties) {
             val endpoint = ucenterConfigProperties.getEndpoint().getOrDefault("refresh-token", "ucenter/refresh-token");

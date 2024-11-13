@@ -34,7 +34,6 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @RequestMapping("/audit-log")
-@PreAuthorize("isAuthenticated()")
 @RequiredArgsConstructor
 public class AuditLogController {
 
@@ -47,6 +46,7 @@ public class AuditLogController {
     }
 
     @PostMapping("/my-activities")
+    @PreAuthorize("isAuthenticated()")
     public Response<QueryRes> myActivities(@RequestBody Query query) {
         return Response.wrap(auditService.myLogs(query));
     }

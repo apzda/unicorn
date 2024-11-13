@@ -42,10 +42,12 @@
 
 ## 运行
 
-1. profile: flyway,gtw,dev
-2. JVM 参数: -Djava.net.preferIPv4Stack=true
+1. 第一次运行时,**必须启用profile: flyway,gtw,dev**。
+2. 第2+次运行时,可以从profile中去除`flyway`。
 
 > 使用`jasypt`加密配置时(默认支持)，添加JVM参数: `-Djasypt.encryptor.password="your-password"`
+> 优先使用ipv4网络，需添加JVM参数: `-Djava.net.preferIPv4Stack=true`
+> `flyway`用于初始化数据库
 
 ## 加密配置
 

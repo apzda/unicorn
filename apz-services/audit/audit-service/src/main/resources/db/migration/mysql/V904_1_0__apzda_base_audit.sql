@@ -13,7 +13,7 @@ CREATE TABLE `apzda_audit_log`
     activity   varchar(64)     NOT NULL COMMENT 'activity',
     runas      varchar(32)     null comment 'the userid of the user who performed this activity',
     level      varchar(12)     NULL     DEFAULT 'info' COMMENT 'log level',
-    ip         varchar(126)    NULL     DEFAULT NULL COMMENT 'ip',
+    ip         varchar(256)    NULL     DEFAULT NULL COMMENT 'ip',
     device     varchar(64)     null comment 'the device on which the activity performed',
     message    TEXT            NULL     DEFAULT NULL COMMENT 'message',
     args       LONGTEXT        NULL     DEFAULT NULL COMMENT 'args of message',
