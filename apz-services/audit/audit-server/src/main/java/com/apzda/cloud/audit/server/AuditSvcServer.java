@@ -28,10 +28,10 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 @SpringBootApplication
 @EnableAuditServer
 @EnableMethodSecurity
-public class AuditServer {
+public class AuditSvcServer {
 
     public static void main(String[] args) {
-        SpringApplication.run(AuditServer.class, args);
+        SpringApplication.run(AuditSvcServer.class, args);
     }
 
 }

@@ -26,10 +26,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  **/
 @SpringBootApplication
 @EnableCaptchaServer
-public class CaptchaServer {
+public class CaptchaSvcServer {
 
     public static void main(String[] args) {
-        SpringApplication.run(CaptchaServer.class, args);
+        SpringApplication.run(CaptchaSvcServer.class, args);
     }
 
 }

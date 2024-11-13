@@ -4,3 +4,4 @@ spring:
     locations: classpath:db/migration/{vendor}
     out-of-order: true
     validate-on-migrate: false
+    enabled: true

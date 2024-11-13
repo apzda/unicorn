@@ -26,10 +26,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  **/
 @SpringBootApplication
 @EnableConfigServer
-public class ConfigServiceServer {
+public class ConfigSvcServer {
 
     public static void main(String[] args) {
-        SpringApplication.run(ConfigServiceServer.class, args);
+        SpringApplication.run(ConfigSvcServer.class, args);
     }
 
 }

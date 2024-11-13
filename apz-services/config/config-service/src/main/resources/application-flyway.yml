@@ -4,3 +4,4 @@ spring:
     out-of-order: true
     baseline-on-migrate: true
     validate-on-migrate: false
+    enabled: true
