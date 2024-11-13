@@ -30,7 +30,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Import(CaptchaConfig.class)
-@ComponentScan(basePackages = { "com.apzda.cloud.captcha.facade" })
+@ComponentScan(basePackages = { "com.apzda.cloud.captcha.facade", "com.apzda.cloud.captcha.controller" })
 @Documented
 public @interface EnableCaptchaServer {
 
