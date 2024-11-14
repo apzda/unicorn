@@ -38,16 +38,25 @@
 因使用Protocol Buffers定义接口，在启动前需要执行`mvn compile`进行编译。
 
 > 每此改动接口定义文件都需要重新编译！！！
->
 
-## 运行
+## 单体运行
 
 1. 第一次运行时,**必须启用profile: flyway,gtw,dev**。
-2. 第2+次运行时,可以从profile中去除`flyway`。
+2. 第二次及以后运行时,可以从profile中去除`flyway`。
 
 > 使用`jasypt`加密配置时(默认支持)，添加JVM参数: `-Djasypt.encryptor.password="your-password"`
 > 优先使用ipv4网络，需添加JVM参数: `-Djava.net.preferIPv4Stack=true`
 > `flyway`用于初始化数据库
+
+## 微服务运行
+
+### NACOS、Eureka等注册中心环境
+
+Coming soon...
+
+### K8S/Docker Swarm容器化环境
+
+Coming soon...
 
 ## 加密配置
 
