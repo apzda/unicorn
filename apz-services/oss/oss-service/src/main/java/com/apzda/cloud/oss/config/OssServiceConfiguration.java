@@ -52,7 +52,7 @@ import static com.apzda.cloud.oss.config.OssConfigProperties.PREVIEW_BEAN_NAME;
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(OssServiceProperties.class)
 @Import({ ResizePluginConfiguration.class, WatermarkPluginConfiguration.class })
-@PropertySource("classpath:/oss-route.properties")
+@PropertySource("classpath:/apzda.oss.service.properties")
 @RequiredArgsConstructor
 @Slf4j
 public class OssServiceConfiguration implements InitializingBean {

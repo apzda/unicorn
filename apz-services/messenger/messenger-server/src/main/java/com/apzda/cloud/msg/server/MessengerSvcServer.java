@@ -26,10 +26,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  **/
 @SpringBootApplication
 @EnableMessengerServer
-public class MessengerServer {
+public class MessengerSvcServer {
 
     public static void main(String[] args) {
-        SpringApplication.run(MessengerServer.class, args);
+        SpringApplication.run(MessengerSvcServer.class, args);
     }
 
 }

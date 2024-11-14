@@ -32,7 +32,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -272,12 +271,7 @@ public class ConfigureServiceImpl implements ConfigureService {
         Privilege priv = perm.orElse(new Privilege());
         priv.setName(privilege.getName());
         val type = privilege.getType();
-        if (StringUtils.isNotBlank(type)) {
-            priv.setType(type);
-        }
-        else {
-            priv.setType("resource");
-        }
+        priv.setType(type.name());
         priv.setTenantId(0L);
         priv.setBuiltin(true);
         priv.setPermission(permission);

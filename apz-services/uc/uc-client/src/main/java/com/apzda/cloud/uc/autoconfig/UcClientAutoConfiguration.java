@@ -103,15 +103,13 @@ public class UcClientAutoConfiguration {
             if (!running) {
                 running = true;
                 try {
-                    if (properties.getResources().size() + properties.getRoles().size()
-                            + properties.getPrivileges().size() == 0) {
+                    if (properties.getResources().isEmpty() && properties.getRoles().isEmpty()
+                            && properties.getPrivileges().isEmpty()) {
                         return;
                     }
 
                     if (log.isDebugEnabled()) {
-                        log.debug("Starting sync security configuration - Resources: {}, Roles: {}, Privileges: {}",
-                                properties.getResources().size(), properties.getRoles().size(),
-                                properties.getPrivileges().size());
+                        log.debug("Starting sync security configuration:  {}", properties);
                     }
 
                     val request = SyncRequest.newBuilder()

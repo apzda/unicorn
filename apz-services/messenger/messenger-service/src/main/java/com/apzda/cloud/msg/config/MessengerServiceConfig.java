@@ -27,10 +27,7 @@ import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.*;
 
 /**
  * @author fengz (windywany@gmail.com)
@@ -41,6 +38,7 @@ import org.springframework.context.annotation.Import;
 @ComponentScan({ "com.apzda.cloud.msg.consumer", "com.apzda.cloud.msg.service", "com.apzda.cloud.msg.converter" })
 @EnableConfigurationProperties(MessengerServiceProperties.class)
 @Import(RedisBasedRateLimiterConfig.class)
+@PropertySource("classpath:/apzda.messenger.service.properties")
 public class MessengerServiceConfig {
 
     @Bean

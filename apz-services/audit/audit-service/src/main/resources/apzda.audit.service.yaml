@@ -10,15 +10,13 @@ apzda:
     security:
       resources:
         auditlog:
-          name: AuditLog
-          description: 系统审计日志
+          name: "{resource.AuditLog}"
+          description: "{resource.AuditLogDesc}"
           actions: r,d
           privileges:
             "[*:auditlog.*]":
               name: AuditLogFullAccess
-              type: resource
-              description: 管理审计日志权限
+              description: "{privilege.AuditLogFullAccessDesc}"
             "[r:auditlog.*]":
               name: AuditLogReadOnlyAccess
-              type: resource
-              description: 只读访问审计日志权限
+              description: "{privilege.AuditLogReadOnlyAccessDesc}"

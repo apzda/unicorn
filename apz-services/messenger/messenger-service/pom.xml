@@ -24,6 +24,10 @@
             <artifactId>messenger-client</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.apzda.cloud</groupId>
+            <artifactId>uc-client</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
@@ -37,7 +41,10 @@
             <artifactId>spring-data-redis</artifactId>
             <optional>true</optional>
         </dependency>
-        <!-- spring-boot-configuration-processor -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>

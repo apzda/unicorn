@@ -1,5 +1,5 @@
 ### 文件上传
-POST http://localhost:8081/oss-server/upload HTTP/1.1
+POST http://localhost:38906/oss/upload HTTP/1.1
 Content-Type: multipart/form-data; boundary=boundar
 Accept: application/json
 
@@ -22,15 +22,15 @@ test/..././../aha/
 > {%
     client.test("Files uploaded successfully", function () {
         client.assert(response.status === 200, "Response status is not 200");
-        client.assert(response.body.errCode === 0, "出错啦: " + response.body.errCode + " != 0");
-        client.assert(response.body.data.files.length === 2, "出错啦: 文件数不为2");
-        client.assert(response.body.data.files[0].error === 0, "出错啦: 文件1上传失败: " + response.body.data.files[0].message);
-        client.assert(response.body.data.files[1].error === 0, "出错啦: 文件2上传失败: " + response.body.data.files[1].message);
+        client.assert(response.body.errCode == 0, "出错啦: " + response.body.errCode + " != 0");
+        client.assert(response.body.data.files.length == 2, "出错啦: 文件数不为2");
+        client.assert(response.body.data.files[0].error == 0, "出错啦: 文件1上传失败: " + response.body.data.files[0].message);
+        client.assert(response.body.data.files[1].error == 0, "出错啦: 文件2上传失败: " + response.body.data.files[1].message);
     });
 %}
 
 ### 上传一只猫的图片
-POST http://localhost:8081/oss-server/upload HTTP/1.1
+POST http://localhost:38906/oss/upload HTTP/1.1
 Content-Type: multipart/form-data; boundary=boundar
 Accept: application/json
 
@@ -48,16 +48,16 @@ watermark
 > {%
     client.test("Files uploaded successfully", function () {
         client.assert(response.status === 200, "Response status is not 200");
-        client.assert(response.body.errCode === 0, "出错啦: " + response.body.errCode + " != 0");
-        client.assert(response.body.data.files.length === 1, "出错啦: 文件数不为1");
-        client.assert(response.body.data.files[0].error === 0, "出错啦: 文件1上传失败: " + response.body.data.files[0].message);
+        client.assert(response.body.errCode == 0, "出错啦: " + response.body.errCode + " != 0");
+        client.assert(response.body.data.files.length == 1, "出错啦: 文件数不为1");
+        client.assert(response.body.data.files[0].error == 0, "出错啦: 文件1上传失败: " + response.body.data.files[0].message);
         client.global.set("catImgURL", response.body.data.files[0].path);
         client.global.set("catImgSize", response.body.data.files[0].length)
     });
 %}
 
 ### 查看上传的猫
-GET http://localhost:8081/oss-file{{catImgURL}}
+GET http://localhost:38906/oss-file{{catImgURL}}
 Accept: application/json
 
 > {%
@@ -68,7 +68,7 @@ Accept: application/json
 %}
 
 ### 通过Base64上传的猫
-POST http://localhost:8081/oss-server/upload HTTP/1.1
+POST http://localhost:38906/oss/upload HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 
@@ -79,7 +79,7 @@ Content-Type: application/json
 > {%
     client.test("Files preview successfully", function () {
         client.assert(response.status === 200, "Response status is not 200");
-        client.assert(response.body.errCode === 0);
+        client.assert(response.body.errCode == 0);
         client.assert(response.body.data.files[0].length === '5134')
         client.assert(response.body.data.files[0].ext === 'png')
     });

@@ -26,10 +26,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  **/
 @SpringBootApplication
 @EnableOssServer
-public class OssServiceServer {
+public class OssSvcServer {
 
     public static void main(String[] args) {
-        SpringApplication.run(OssServiceServer.class, args);
+        SpringApplication.run(OssSvcServer.class, args);
     }
 
 }

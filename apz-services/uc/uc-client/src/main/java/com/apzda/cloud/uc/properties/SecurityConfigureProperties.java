@@ -20,6 +20,7 @@ import com.apzda.cloud.uc.resource.ResourceIdExplorer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -94,13 +95,20 @@ public class SecurityConfigureProperties {
         @NotBlank
         private String name;
 
-        private String type;
+        @NotNull
+        private Type type = Type.resource;
 
-        private Boolean deleted;
+        private Boolean deleted = false;
 
         private String description;
 
         private String extra;
+
+    }
+
+    public enum Type {
+
+        authority, resource
 
     }
 

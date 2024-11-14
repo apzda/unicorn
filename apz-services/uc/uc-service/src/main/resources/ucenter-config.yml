@@ -16,64 +16,61 @@ apzda:
     security:
       resources:
         user:
-          name: User
+          name: "{resource.User}"
+          description: "{resource.UserDesc}"
           explorer: com.apzda.cloud.uc.resource.UserIdExplorer
           privileges:
             "[*:user.*]":
               name: UserFullAccess
-              type: resource
-              description: 管理系统账户的权限
+              description: "{privilege.UserFullAccessDesc}"
             "[r:user.*]":
               name: UserReadOnlyAccess
               type: resource
-              description: 只读访问系统账户的权限
+              description: "{privilege.UserReadOnlyAccessDesc}"
         role:
-          name: Role
+          name: "{resource.Role}"
+          description: "{resource.RoleDesc}"
           privileges:
             "[*:role.*]":
               name: RoleFullAccess
-              type: resource
-              description: 管理系统角色的权限
+              description: "{privilege.RoleFullAccessDesc}"
             "[r:role.*]":
               name: RoleReadOnlyAccess
-              type: resource
-              description: 只读访问系统角色的权限
+              description: "{privilege.RoleReadOnlyAccessDesc}"
         privilege:
-          name: Privilege
+          name: "{resource.Privilege}"
+          description: "{resource.PrivilegeDesc}"
           privileges:
             "[*:privilege.*]":
               name: PrivilegeFullAccess
-              type: resource
-              description: 管理系统权限的权限
+              description: "{privilege.PrivilegeFullAccessDesc}"
             "[r:privilege.*]":
               name: PrivilegeReadOnlyAccess
-              type: resource
-              description: 只读访问系统权限的权限
+              description: "{privilege.PrivilegeReadOnlyAccessDesc}"
           children:
             resource:
-              name: Resource
-              description: 系统里可被访问的资源
+              name: "{resource.Resource}"
+              description: "{resource.ResourceDesc}"
               actions: r
       privileges:
         "[*:*]":
-          name: All Privileges
-          description: 超级权限
-          type: resource
+          name: "{privilege.AllPrivileges}"
+          description: "{privilege.AllPrivilegesDesc}"
         RUNAS:
-          name: Run As
-          description: 变身普通用户，代替普通用户操作.
+          name: "{privilege.RunAs}"
+          description: "{privilege.RunAsDesc}"
           type: authority
         SIMPLE_USER:
-          name: Simple User
+          name: "{privilege.SimpleUser}"
           type: authority
-          description: 普通用户
+          description: "{privilege.SimpleUserDesc}"
       roles:
         sa:
-          name: Super Administrator
-          description: 超级管理员
+          name: "{role.SuperAdministrator}"
+          description: "{role.SuperAdministratorDesc}"
         admin:
-          name: Administrator
-          description: 管理员
+          name: "{role.Administrator}"
+          description: "{role.AdministratorDesc}"
         user:
-          name: Authenticated User
-          description: 普通用户
+          name: "{role.AuthenticatedUser}"
+          description: "{role.AuthenticatedUserDesc}"
