@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.apzda.cloud.uc.server;
+package com.apzda.cloud.sms.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,12 +24,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @version 1.0.0
  * @since 1.0.0
  **/
+
 @SpringBootApplication
-@EnableUCenterServer
-public class UCenterServer {
+@EnableSmsServer
+public class SmsSvcServer {
 
     public static void main(String[] args) {
-        SpringApplication.run(UCenterServer.class, args);
+        SpringApplication.run(SmsSvcServer.class, args);
     }
 
 }

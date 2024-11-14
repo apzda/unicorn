@@ -42,6 +42,7 @@ import com.apzda.cloud.uc.domain.vo.UserStatus;
 import com.apzda.cloud.uc.error.AlreadySwitchedError;
 import com.apzda.cloud.uc.proto.*;
 import com.google.protobuf.Empty;
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +53,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -97,8 +97,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional(readOnly = true)
-    @PreAuthorize("@authz.iCan('r:user')")
-    public AccountListResponse list(AccountListRequest request) {
+    public AccountListResponse list(@Nonnull AccountListRequest request) {
         val builder = AccountListResponse.newBuilder().setErrCode(0);
         val current = Math.max(1, request.getCurrent()) - 1;
         val size = Math.max(10, request.getSize());
@@ -175,7 +174,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @PreAuthorize("@authz.iCan('c:user')")
     @AuditLog(activity = "创建账号", template = "账户'{}'创建成功", errorTpl = "账户'{}'创建失败: {}",
             args = { "#request.username", "#throwExp?.message" })
     public CreateAccountResponse createAccount(CreateAccountRequest request) {
@@ -183,7 +181,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @PreAuthorize("@authz.iCan('u:user')")
     @AuditLog(activity = "修改账号", template = "账户'{}'修改成功", errorTpl = "账户'{}'修改失败: {}",
             args = { "#request.username", "#throwExp?.message" })
     public GsvcExt.CommonRes updateAccount(UpdateAccountRequest request) {
@@ -226,7 +223,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @PreAuthorize("isAuthenticated()")
     @AuditLog(activity = "分配角色", template = "账户'{}'分配角色成功", errorTpl = "账户'{}'分配角色失败: {}",
             args = { "#request.username", "#throwExp?.message" })
     public GsvcExt.CommonRes assignRole(UpdateRoleRequest request) {
@@ -268,7 +264,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @PreAuthorize("@authz.iCan('u:user')")
     @Transactional(readOnly = true)
     @AuditLog(activity = "踢下线", template = "账户'{}'被强制下线", errorTpl = "账户'{}'强制下线失败: {}",
             args = { "#request.username", "#throwExp?.message" })
@@ -295,7 +290,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @PreAuthorize("hasAuthority('SIMPLE_USER')")
     @AuditLog(activity = "授权", template = "查看授权码: {}", errorTpl = "查看授权码失败: {}{}",
             args = { "#cData['code']", "#throwExp?.message" })
     public SwitchCodeRes switchCode(Empty request) {
@@ -332,7 +326,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @PreAuthorize("isAuthenticated()")
     @Transactional
     @Modifying
     public MfaConfigRes mfaConfig(Empty request) {
@@ -340,15 +333,15 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @PreAuthorize("isAuthenticated()")
     @Transactional
     @Modifying
+    @AuditLog(activity = "mfa", template = "重置多重认证: {}", errorTpl = "重置多重认证失败: {}{}",
+            args = { "#returnObj?.errCode", "#throwExp?.message" })
     public MfaConfigRes resetMfa(Empty request) {
         return setupUserMfa(true);
     }
 
     @Override
-    @PreAuthorize("isAuthenticated()")
     @Transactional
     @Modifying
     @AuditLog(activity = "mfa", template = "多重认证配置: {}", errorTpl = "多重认证配置失败: {}{}",
@@ -388,7 +381,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @PreAuthorize("isAuthenticated()")
     @Transactional(readOnly = true)
     public GsvcExt.CommonRes verifyMfa(VerifyMfaReq request) {
         val builder = GsvcExt.CommonRes.newBuilder();

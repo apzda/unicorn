@@ -58,6 +58,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -70,8 +71,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @since 1.0.0
  **/
 @Configuration(proxyBeanMethods = false)
-@PropertySource(name = "ucenter-default-cfg", value = "classpath:/ucenter-config.yml",
-        factory = YamlPropertySourceFactory.class)
+@PropertySources({ @PropertySource(name = "ucenter-default-cfg", value = "classpath:/ucenter-config.yml",
+        factory = YamlPropertySourceFactory.class), @PropertySource("classpath:/apzda.uc.service.properties") })
 @EnableConfigurationProperties(UCenterConfigProperties.class)
 @EnableJpaRepositories("com.apzda.cloud.uc.domain.repository")
 @EntityScan("com.apzda.cloud.uc.domain.entity")

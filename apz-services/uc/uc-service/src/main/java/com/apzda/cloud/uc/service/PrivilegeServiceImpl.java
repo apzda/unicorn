@@ -36,7 +36,6 @@ import lombok.val;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -65,7 +64,6 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     private final PrivilegeMapper privilegeMapper;
 
     @Override
-    @PreAuthorize("@authz.iCan('r:privilege')")
     @Transactional(readOnly = true)
     public PrivilegeQueryRes query(PrivilegeQuery query) {
         val builder = PrivilegeQueryRes.newBuilder().setErrCode(0);
@@ -104,7 +102,6 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     }
 
     @Override
-    @PreAuthorize("@authz.iCan('c:privilege')")
     @Transactional
     @Modifying
     @AuditLog(activity = "创建权限", template = "权限'{}({})'创建成功", errorTpl = "权限'{}({})'创建失败: {}",
@@ -124,7 +121,6 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     }
 
     @Override
-    @PreAuthorize("@authz.iCan('u:privilege')")
     @Transactional
     @Modifying
     @AuditLog(activity = "修改权限", template = "权限'{}'修改成功", errorTpl = "权限'{}'修改失败: {}",
@@ -151,7 +147,6 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     }
 
     @Override
-    @PreAuthorize("@authz.iCan('d:privilege')")
     @Transactional
     @Modifying
     @AuditLog(activity = "删除权限", template = "权限'{}'删除成功", errorTpl = "权限'{}'删除失败: {}",

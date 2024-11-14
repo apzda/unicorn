@@ -20,15 +20,19 @@
             <groupId>com.apzda.cloud</groupId>
             <artifactId>uc-service</artifactId>
         </dependency>
+        <!--
         <dependency>
             <groupId>com.apzda.cloud</groupId>
             <artifactId>uc-sms</artifactId>
         </dependency>
-        <!-- third library -->
+        -->
+        <!--
         <dependency>
             <groupId>com.apzda.cloud</groupId>
             <artifactId>uc-wx-miniapp</artifactId>
         </dependency>
+        -->
+        <!-- third library -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
@@ -41,17 +45,15 @@
             <groupId>io.lettuce</groupId>
             <artifactId>lettuce-core</artifactId>
         </dependency>
+        <!--
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-3-starter</artifactId>
         </dependency>
+        -->
         <dependency>
             <groupId>com.github.ulisesbocchio</groupId>
             <artifactId>jasypt-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>
@@ -80,7 +82,6 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

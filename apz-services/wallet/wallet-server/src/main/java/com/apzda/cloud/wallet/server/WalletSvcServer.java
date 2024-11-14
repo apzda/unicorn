@@ -26,10 +26,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  **/
 @SpringBootApplication
 @EnableWalletServer
-public class WalletServer {
+public class WalletSvcServer {
 
     public static void main(String[] args) {
-        SpringApplication.run(WalletServer.class, args);
+        SpringApplication.run(WalletSvcServer.class, args);
     }
 
 }

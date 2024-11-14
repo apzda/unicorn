@@ -16,9 +16,9 @@
  */
 package com.apzda.cloud.wallet.autoconfig;
 
+import com.apzda.cloud.gsvc.config.EnableGsvcServices;
 import com.apzda.cloud.wallet.proto.WalletServiceGsvc;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.context.annotation.Import;
 
 /**
  * @author fengz (windywany@gmail.com)
@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Import;
  * @since 1.0.0
  **/
 @AutoConfiguration
-@Import({ WalletServiceGsvc.class })
+@EnableGsvcServices({ WalletServiceGsvc.class })
 public class WalletAutoConfiguration {
 
 }

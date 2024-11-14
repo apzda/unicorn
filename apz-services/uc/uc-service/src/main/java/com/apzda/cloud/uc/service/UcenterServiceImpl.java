@@ -30,6 +30,7 @@ import com.apzda.cloud.uc.domain.repository.UserRepository;
 import com.apzda.cloud.uc.domain.service.UserManager;
 import com.apzda.cloud.uc.domain.vo.UserStatus;
 import com.apzda.cloud.uc.proto.*;
+import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -69,7 +70,7 @@ public class UcenterServiceImpl implements UcenterService {
 
     @Override
     @Transactional
-    public UserInfo getUserInfo(Request request) {
+    public UserInfo getUserInfo(@Nonnull Request request) {
         val builder = UserInfo.newBuilder();
         try {
             builder.setErrCode(0);

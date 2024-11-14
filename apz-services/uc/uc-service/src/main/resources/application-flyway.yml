@@ -5,9 +5,3 @@ spring:
     out-of-order: true
     validate-on-migrate: false
     baseline-on-migrate: true
-  jpa:
-    properties:
-      hibernate:
-        auto_quote_keyword: true
-    hibernate:
-      ddl-auto: validate

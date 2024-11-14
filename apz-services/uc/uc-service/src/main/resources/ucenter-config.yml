@@ -3,21 +3,19 @@ spring:
     properties:
       hibernate:
         auto_quote_keyword: true
+    hibernate:
+      ddl-auto: validate
 
 apzda:
   ucenter:
     server:
-      endpoint:
-        username-password: /ucenter/login
-        switch-to: /ucenter/switch-to
-        switch-back: /ucenter/switch-back
-        refresh-token: /ucenter/refresh-token
       authenticator: com.apzda.cloud.uc.security.mfa.GoogleTotpAuthenticator
     security:
       resources:
         user:
           name: "{resource.User}"
           description: "{resource.UserDesc}"
+          actions: c,r,u,d,kickoff
           explorer: com.apzda.cloud.uc.resource.UserIdExplorer
           privileges:
             "[*:user.*]":
@@ -25,8 +23,10 @@ apzda:
               description: "{privilege.UserFullAccessDesc}"
             "[r:user.*]":
               name: UserReadOnlyAccess
-              type: resource
               description: "{privilege.UserReadOnlyAccessDesc}"
+            "[kickoff:user.*]":
+              name: "{privilege.KickoffUser}"
+              description: "{privilege.KickoffUserDesc}"
         role:
           name: "{resource.Role}"
           description: "{resource.RoleDesc}"

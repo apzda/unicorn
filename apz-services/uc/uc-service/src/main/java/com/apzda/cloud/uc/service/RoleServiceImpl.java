@@ -48,7 +48,6 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -84,7 +83,6 @@ public class RoleServiceImpl implements RoleService {
     private EntityManager entityManager;
 
     @Override
-    @PreAuthorize("@authz.iCan('r:role')")
     @Transactional(readOnly = true)
     public RoleQueryResponse list(RoleQuery query) {
         val builder = RoleQueryResponse.newBuilder().setErrCode(0);
@@ -140,7 +138,6 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    @PreAuthorize("@authz.iCan('c:role')")
     @Transactional
     @Modifying(clearAutomatically = true)
     @AuditLog(activity = "创建角色", template = "角色'{}({})'创建成功", errorTpl = "角色'{}({})'创建失败: {}",
@@ -179,7 +176,6 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    @PreAuthorize("@authz.iCan('u:role')")
     @Transactional
     @Modifying(clearAutomatically = true)
     @AuditLog(activity = "修改角色", template = "角色'{}({})'修改成功", errorTpl = "角色'{}({})'修改失败: {}",
@@ -219,7 +215,6 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    @PreAuthorize("@authz.iCan('d:role')")
     @Transactional
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @AuditLog(activity = "删除角色", template = "角色'{}'已经删除", errorTpl = "角色'{}'删除失败: {}",
