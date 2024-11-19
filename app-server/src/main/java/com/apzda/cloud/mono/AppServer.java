@@ -21,7 +21,6 @@ import com.apzda.cloud.captcha.server.EnableCaptchaServer;
 import com.apzda.cloud.config.server.EnableConfigServer;
 import com.apzda.cloud.oss.server.EnableOssServer;
 import com.apzda.cloud.uc.server.EnableUCenterServer;
-import com.apzda.cloud.wallet.server.EnableWalletServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -36,7 +35,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableCaptchaServer
 @EnableOssServer
 @EnableUCenterServer
-@EnableWalletServer
 public class AppServer {
 
     public static void main(String[] args) {
