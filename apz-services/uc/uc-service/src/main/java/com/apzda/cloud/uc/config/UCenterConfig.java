@@ -18,6 +18,7 @@ package com.apzda.cloud.uc.config;
 
 import com.apzda.cloud.captcha.helper.CaptchaHelper;
 import com.apzda.cloud.config.service.SettingService;
+import com.apzda.cloud.gsvc.config.EnableGsvcServices;
 import com.apzda.cloud.gsvc.infra.TempStorage;
 import com.apzda.cloud.gsvc.io.YamlPropertySourceFactory;
 import com.apzda.cloud.gsvc.security.config.SecurityConfigProperties;
@@ -31,6 +32,9 @@ import com.apzda.cloud.gsvc.security.userdetails.UserDetailsMetaService;
 import com.apzda.cloud.uc.domain.service.UserManager;
 import com.apzda.cloud.uc.mapper.JwtTokenMapper;
 import com.apzda.cloud.uc.mfa.Authenticator;
+import com.apzda.cloud.uc.proto.AccountService;
+import com.apzda.cloud.uc.proto.PrivilegeService;
+import com.apzda.cloud.uc.proto.RoleService;
 import com.apzda.cloud.uc.security.UserDetailsServiceImpl;
 import com.apzda.cloud.uc.security.authentication.DefaultAuthenticationProvider;
 import com.apzda.cloud.uc.security.authentication.RefreshAuthenticationProvider;
@@ -73,6 +77,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @Configuration(proxyBeanMethods = false)
 @PropertySources({ @PropertySource(name = "ucenter-default-cfg", value = "classpath:/ucenter-config.yml",
         factory = YamlPropertySourceFactory.class), @PropertySource("classpath:/apzda.uc.service.properties") })
+@EnableGsvcServices({ AccountService.class, RoleService.class, PrivilegeService.class })
 @EnableConfigurationProperties(UCenterConfigProperties.class)
 @EnableJpaRepositories("com.apzda.cloud.uc.domain.repository")
 @EntityScan("com.apzda.cloud.uc.domain.entity")

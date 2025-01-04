@@ -36,6 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -188,6 +189,7 @@ public class UcenterServiceImpl implements UcenterService {
     public UserMetaResp getMetas(Request request) {
         val metaName = request.getMetaName();
         val username = request.getUsername();
+
         if (UserMetas.CURRENT_TENANT_ID.equals(metaName)) {
             val builder = UserMeta.newBuilder();
             builder.setName(UserMetas.CURRENT_TENANT_ID);
@@ -266,6 +268,8 @@ public class UcenterServiceImpl implements UcenterService {
     @Override
     @AuditLog(activity = "开通账号", template = "账户'{}'开通成功", errorTpl = "账户'{}'开通失败: {}",
             args = { "#request.username", "#throwExp?.message" })
+    @Transactional(rollbackFor = Exception.class)
+    @Modifying
     public OpenAccountResponse openAccount(OpenAccountRequest request) {
         return userManager.openAccount(request);
     }
@@ -273,6 +277,8 @@ public class UcenterServiceImpl implements UcenterService {
     @Override
     @AuditLog(activity = "重置密码", template = "账户'{}'密码重置成功", errorTpl = "账户'{}'密码重置失败: {}",
             args = { "#request.username", "#throwExp?.message" })
+    @Transactional(rollbackFor = Exception.class)
+    @Modifying
     public GsvcExt.CommonRes resetPassword(ResetPasswordRequest request) {
         return userManager.resetPassword(request);
     }
@@ -385,7 +391,7 @@ public class UcenterServiceImpl implements UcenterService {
      * @return 租房ID.
      */
     @NonNull
-    private Long getTenantId(Request request) {
+    private Long getTenantId(@NonNull Request request) {
         return Long.parseLong(StringUtils.defaultIfBlank(request.getTenantId(), TenantManager.tenantId("0")));
     }
 

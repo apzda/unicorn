@@ -115,7 +115,7 @@ public class TokenCustomizer implements JwtTokenCustomizer {
             userToken.setPhone(user.getPhoneNumber());
             userToken.setPhonePrefix(user.getPhonePrefix());
             userToken.setTheme(user.getMeta(UserMetas.CURRENT_THEME_ID).orElse(emptyMeta).getValue());
-            userToken.setLang(user.getMeta(UserDetailsMeta.LANGUAGE_KEY).orElse(emptyMeta).getValue());
+            userToken.setLang(user.getMeta(UserMetas.LANGUAGE_KEY).orElse(emptyMeta).getValue());
             userToken.setTimezone(user.getMeta(UserMetas.TIMEZONE_KEY).orElse(emptyMeta).getValue());
 
             // 用户所属租户列表

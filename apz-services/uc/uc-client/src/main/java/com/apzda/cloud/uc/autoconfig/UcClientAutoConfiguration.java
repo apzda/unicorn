@@ -21,11 +21,14 @@ import com.apzda.cloud.gsvc.context.TenantManager;
 import com.apzda.cloud.gsvc.i18n.MessageSourceNameResolver;
 import com.apzda.cloud.gsvc.security.config.GsvcSecurityAutoConfiguration;
 import com.apzda.cloud.gsvc.security.userdetails.UserDetailsMetaService;
+import com.apzda.cloud.uc.FakeAuthenticationProvider;
 import com.apzda.cloud.uc.ProxiedUserDetailsService;
 import com.apzda.cloud.uc.UserDetailsMetaServiceImpl;
 import com.apzda.cloud.uc.context.UCenterTenantManager;
 import com.apzda.cloud.uc.properties.SecurityConfigureProperties;
-import com.apzda.cloud.uc.proto.*;
+import com.apzda.cloud.uc.proto.ConfigureService;
+import com.apzda.cloud.uc.proto.SyncRequest;
+import com.apzda.cloud.uc.proto.UcenterService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -37,8 +40,11 @@ import org.springframework.context.SmartLifecycle;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
+
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author fengz (windywany@gmail.com)
@@ -47,8 +53,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  **/
 @AutoConfiguration(before = GsvcSecurityAutoConfiguration.class)
 @EnableMethodSecurity
-@EnableGsvcServices({ UcenterService.class, ConfigureService.class, AccountService.class, RoleService.class,
-        PrivilegeService.class })
+@EnableGsvcServices({ UcenterService.class, ConfigureService.class })
 @ComponentScan("com.apzda.cloud.uc.mapper")
 @EnableConfigurationProperties(SecurityConfigureProperties.class)
 @Slf4j
@@ -77,6 +82,12 @@ public class UcClientAutoConfiguration {
         return new UserDetailsMetaServiceImpl(ucenterService, objectMapper);
     }
 
+    @Bean("defaultAuthenticationProvider")
+    @ConditionalOnMissingBean
+    AuthenticationProvider defaultAuthenticationProvider() {
+        return new FakeAuthenticationProvider();
+    }
+
     @Configuration(proxyBeanMethods = false)
     @ConditionalOnProperty(prefix = "apzda.ucenter.security", name = "auto-sync", havingValue = "true",
             matchIfMissing = true)
@@ -102,31 +113,33 @@ public class UcClientAutoConfiguration {
         public void start() {
             if (!running) {
                 running = true;
-                try {
-                    if (properties.getResources().isEmpty() && properties.getRoles().isEmpty()
-                            && properties.getPrivileges().isEmpty()) {
-                        return;
-                    }
+                CompletableFuture.runAsync(() -> {
+                    try {
+                        if (properties.getResources().isEmpty() && properties.getRoles().isEmpty()
+                                && properties.getPrivileges().isEmpty()) {
+                            return;
+                        }
 
-                    if (log.isDebugEnabled()) {
-                        log.debug("Starting sync security configuration:  {}", properties);
-                    }
+                        if (log.isDebugEnabled()) {
+                            log.debug("Starting sync security configuration:  {}", properties);
+                        }
 
-                    val request = SyncRequest.newBuilder()
-                        .setConfiguration(objectMapper.writeValueAsString(properties))
-                        .build();
+                        val request = SyncRequest.newBuilder()
+                            .setConfiguration(objectMapper.writeValueAsString(properties))
+                            .build();
 
-                    val response = configureService.syncConfiguration(request);
-                    if (response.getErrCode() != 0) {
-                        throw new Exception(response.getErrMsg());
+                        val response = configureService.syncConfiguration(request);
+                        if (response.getErrCode() != 0) {
+                            throw new Exception(response.getErrMsg());
+                        }
+                        else if (log.isDebugEnabled()) {
+                            log.debug("Sync security configuration completed");
+                        }
                     }
-                    else if (log.isDebugEnabled()) {
-                        log.debug("Sync security configuration completed");
+                    catch (Exception e) {
+                        log.warn("Cannot sync security configuration to ucenter server: {}", e.getMessage());
                     }
-                }
-                catch (Exception e) {
-                    log.warn("Cannot sync security configuration to ucenter server: {}", e.getMessage());
-                }
+                });
             }
         }
 

@@ -164,7 +164,8 @@ public class UserManagerImpl implements UserManager, ApplicationEventPublisherAw
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
+    @Modifying
     public void setupUserCredentialsExpired(User user, Integer timeout) {
         try {
             val setting = settingService.load(UcSetting.class);
@@ -647,7 +648,7 @@ public class UserManagerImpl implements UserManager, ApplicationEventPublisherAw
      * @param user 当前用户实例
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Modifying
     public void updateRoles(@Nonnull List<String> roleList, @Nonnull User user, boolean force) {
         Collection<Role> granted = Optional.ofNullable(user.getRoles()).orElse(new ArrayList<>());
@@ -685,7 +686,7 @@ public class UserManagerImpl implements UserManager, ApplicationEventPublisherAw
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Modifying
     public GsvcExt.CommonRes assignRole(UpdateRoleRequest request) {
         val username = request.getUsername();

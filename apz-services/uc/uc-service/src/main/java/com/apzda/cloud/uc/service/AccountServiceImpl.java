@@ -176,6 +176,8 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @AuditLog(activity = "创建账号", template = "账户'{}'创建成功", errorTpl = "账户'{}'创建失败: {}",
             args = { "#request.username", "#throwExp?.message" })
+    @Transactional(rollbackFor = Exception.class)
+    @Modifying
     public CreateAccountResponse createAccount(CreateAccountRequest request) {
         return userManager.createAccount(request);
     }
@@ -183,6 +185,8 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @AuditLog(activity = "修改账号", template = "账户'{}'修改成功", errorTpl = "账户'{}'修改失败: {}",
             args = { "#request.username", "#throwExp?.message" })
+    @Transactional(rollbackFor = Exception.class)
+    @Modifying
     public GsvcExt.CommonRes updateAccount(UpdateAccountRequest request) {
         return userManager.updateAccount(request);
     }
@@ -193,7 +197,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Modifying
     public GsvcExt.CommonRes updatePassword(UpdatePasswordRequest request) {
         val builder = GsvcExt.CommonRes.newBuilder().setErrCode(0);
@@ -225,6 +229,8 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @AuditLog(activity = "分配角色", template = "账户'{}'分配角色成功", errorTpl = "账户'{}'分配角色失败: {}",
             args = { "#request.username", "#throwExp?.message" })
+    @Transactional(rollbackFor = Exception.class)
+    @Modifying
     public GsvcExt.CommonRes assignRole(UpdateRoleRequest request) {
         val context = AuditContextHolder.getContext();
         context.setNewValue(request.getRolesList());
@@ -232,7 +238,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Modifying
     public GsvcExt.CommonRes updateMyAccount(UpdateAccountInfoRequest request) {
         val builder = GsvcExt.CommonRes.newBuilder().setErrCode(0);
@@ -264,9 +270,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     @AuditLog(activity = "踢下线", template = "账户'{}'被强制下线", errorTpl = "账户'{}'强制下线失败: {}",
             args = { "#request.username", "#throwExp?.message" })
+    @Transactional(rollbackFor = Exception.class)
+    @Modifying
     public GsvcExt.CommonRes kickoff(Account request) {
         val builder = GsvcExt.CommonRes.newBuilder();
         val uname = request.getUsername();
@@ -326,14 +333,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Modifying
     public MfaConfigRes mfaConfig(Empty request) {
         return setupUserMfa(false);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Modifying
     @AuditLog(activity = "mfa", template = "重置多重认证: {}", errorTpl = "重置多重认证失败: {}{}",
             args = { "#returnObj?.errCode", "#throwExp?.message" })
@@ -342,7 +349,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Modifying
     @AuditLog(activity = "mfa", template = "多重认证配置: {}", errorTpl = "多重认证配置失败: {}{}",
             args = { "#returnObj?.errCode", "#throwExp?.message" })

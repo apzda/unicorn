@@ -62,7 +62,7 @@ public class ConfigureServiceImpl implements ConfigureService {
     private final RolePrivilegeRepository rolePrivilegeRepository;
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Modifying
     public GsvcExt.CommonRes syncConfiguration(SyncRequest request) {
         val configuration = request.getConfiguration();

@@ -18,7 +18,6 @@ package com.apzda.cloud.uc.context;
 
 import com.apzda.cloud.gsvc.context.TenantManager;
 import com.apzda.cloud.gsvc.security.userdetails.UserDetailsMeta;
-import com.apzda.cloud.uc.UserMetas;
 import com.google.common.base.Splitter;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -41,7 +40,7 @@ public class UCenterTenantManager extends TenantManager<String> {
         if (authentication != null && authentication.isAuthenticated()) {
             val principal = authentication.getPrincipal();
             if (principal instanceof UserDetailsMeta userDetailsMeta) {
-                val currentTenantId = userDetailsMeta.cached(UserMetas.CURRENT_TENANT_ID, authentication);
+                val currentTenantId = userDetailsMeta.getTenantId();
                 if (StringUtils.isNotBlank(currentTenantId)) {
                     return Splitter.on(",")
                         .trimResults()

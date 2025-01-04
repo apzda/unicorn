@@ -39,4 +39,6 @@ public interface UserMetas {
 
     String RUNNING_GT = "running_gt";
 
+    String LANGUAGE_KEY = "language";
+
 }

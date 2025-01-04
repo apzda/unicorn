@@ -55,6 +55,12 @@ public class UserDetailsMetaServiceImpl implements UserDetailsMetaService {
     private final ObjectMapper objectMapper;
 
     @Override
+    public String getTenantId(@NonNull UserDetails userDetails) {
+        val meta = getMetaData(userDetails, UserMetas.CURRENT_TENANT_ID, String.class);
+        return meta.orElse(null);
+    }
+
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities(@NonNull UserDetails userDetails) {
         val username = userDetails.getUsername();
         try {
@@ -76,7 +82,7 @@ public class UserDetailsMetaServiceImpl implements UserDetailsMetaService {
             }
         }
         catch (Exception e) {
-            log.warn("Cannot load authorities of {} from UCenter Service: {}", username, e.getMessage());
+            log.error("Cannot load authorities of {} from UCenter Service: {}", username, e.getMessage());
         }
         return Collections.emptyList();
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023-2024 Fengz Ning (windywany@gmail.com)
+ * Copyright (C) 2023-2025 Fengz Ning (windywany@gmail.com)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,21 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.apzda.cloud.msg.mq;
+package com.apzda.cloud.uc;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 
 /**
  * @author fengz (windywany@gmail.com)
  * @version 1.0.0
  * @since 1.0.0
  **/
-@Slf4j
-public class FixedRateLimiter extends AbstractRateLimiter {
+public class FakeAuthenticationProvider implements AuthenticationProvider {
 
-    public FixedRateLimiter(RocketMQTemplate mqTemplate, int maxRetry) {
-        super(mqTemplate, maxRetry);
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        return null;
+    }
+
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return true;
     }
 
 }

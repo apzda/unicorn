@@ -102,7 +102,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Modifying
     @AuditLog(activity = "创建权限", template = "权限'{}({})'创建成功", errorTpl = "权限'{}({})'创建失败: {}",
             args = { "#request.name", "#request.permission", "#throwExp?.message" })
@@ -121,7 +121,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Modifying
     @AuditLog(activity = "修改权限", template = "权限'{}'修改成功", errorTpl = "权限'{}'修改失败: {}",
             args = { "#request.id", "#throwExp?.message" })
@@ -147,7 +147,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Modifying
     @AuditLog(activity = "删除权限", template = "权限'{}'删除成功", errorTpl = "权限'{}'删除失败: {}",
             args = { "#request.id", "#throwExp?.message" })

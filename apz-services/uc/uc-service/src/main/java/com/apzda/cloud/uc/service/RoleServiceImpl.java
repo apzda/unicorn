@@ -138,7 +138,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Modifying(clearAutomatically = true)
     @AuditLog(activity = "创建角色", template = "角色'{}({})'创建成功", errorTpl = "角色'{}({})'创建失败: {}",
             args = { "#request.name", "#request.role", "#throwExp?.message" })
@@ -176,7 +176,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Modifying(clearAutomatically = true)
     @AuditLog(activity = "修改角色", template = "角色'{}({})'修改成功", errorTpl = "角色'{}({})'修改失败: {}",
             args = { "#request.name", "#request.role", "#throwExp?.message" })
@@ -215,7 +215,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @AuditLog(activity = "删除角色", template = "角色'{}'已经删除", errorTpl = "角色'{}'删除失败: {}",
             args = { "#request.id", "#throwExp?.message" })
