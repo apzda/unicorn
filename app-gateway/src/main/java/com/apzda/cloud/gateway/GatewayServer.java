@@ -18,6 +18,7 @@ package com.apzda.cloud.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * @author fengz (windywany@gmail.com)
@@ -25,6 +26,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 1.0.0
  **/
 @SpringBootApplication
+@EnableDiscoveryClient
 public class GatewayServer {
 
     public static void main(String[] args) {

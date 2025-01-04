@@ -26,10 +26,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  **/
 @SpringBootApplication
 @EnableUCenterServer
-public class UcSvcServer {
+public class UcenterSvcServer {
 
     public static void main(String[] args) {
-        SpringApplication.run(UcSvcServer.class, args);
+        SpringApplication.run(UcenterSvcServer.class, args);
     }
 
 }

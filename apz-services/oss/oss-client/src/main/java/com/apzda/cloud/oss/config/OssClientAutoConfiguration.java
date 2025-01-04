@@ -99,7 +99,7 @@ public class OssClientAutoConfiguration {
     }
 
     @Bean("fsOssBackend")
-    @ConditionalOnProperty(value = "apzda.cloud.oss.backend", havingValue = "fs", matchIfMissing = true)
+    @ConditionalOnProperty(value = "apzda.cloud.oss.backend", havingValue = "fs")
     OssBackend fsOssBackend() {
         return new FsBackend();
     }

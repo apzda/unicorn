@@ -26,6 +26,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <alibaba.cloud.version>2023.0.3.2</alibaba.cloud.version>
     </properties>
 
     <dependencyManagement>
@@ -88,17 +90,6 @@
             <dependency>
                 <groupId>com.apzda.cloud</groupId>
                 <artifactId>captcha-service</artifactId>
-                <version>2.0.0-SNAPSHOT</version>
-            </dependency>
-            <!-- messenger service -->
-            <dependency>
-                <groupId>com.apzda.cloud</groupId>
-                <artifactId>messenger-client</artifactId>
-                <version>2.0.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.apzda.cloud</groupId>
-                <artifactId>messenger-service</artifactId>
                 <version>2.0.0-SNAPSHOT</version>
             </dependency>
             <!-- oss service -->
@@ -165,16 +156,6 @@
             </dependency>
             <dependency>
                 <groupId>com.apzda.cloud</groupId>
-                <artifactId>uc-wx-miniapp</artifactId>
-                <version>2.0.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.apzda.cloud</groupId>
-                <artifactId>uc-wx-mp</artifactId>
-                <version>2.0.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.apzda.cloud</groupId>
                 <artifactId>uc-service</artifactId>
                 <version>2.0.0-SNAPSHOT</version>
             </dependency>
@@ -197,6 +178,31 @@
             </dependency>
             <!-- application services -->
             <!-- third-party libraries -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+                <version>${alibaba.cloud.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+                <version>${alibaba.cloud.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.ben-manes.caffeine</groupId>
+                <artifactId>caffeine</artifactId>
+                <version>${caffeine.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>checker-qual</artifactId>
+                        <groupId>org.checkerframework</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>error_prone_annotations</artifactId>
+                        <groupId>com.google.errorprone</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

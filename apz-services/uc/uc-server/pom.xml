@@ -19,6 +19,12 @@
         <dependency>
             <groupId>com.apzda.cloud</groupId>
             <artifactId>uc-service</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>httpclient</artifactId>
+                    <groupId>org.apache.httpcomponents</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--
         <dependency>
@@ -26,16 +32,22 @@
             <artifactId>uc-sms</artifactId>
         </dependency>
         -->
-        <!--
-        <dependency>
-            <groupId>com.apzda.cloud</groupId>
-            <artifactId>uc-wx-miniapp</artifactId>
-        </dependency>
-        -->
         <!-- third library -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -56,11 +68,6 @@
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk18on</artifactId>
-            <version>1.78.1</version>
         </dependency>
         <!-- runtime -->
         <dependency>
